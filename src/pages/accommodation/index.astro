@@ -11,7 +11,7 @@ import SectionTitle from "../../components/SectionTitle.astro";
 import RoomRow from "../../components/RoomRow.astro";
 import Gallery from "../../components/Gallery.astro";
 import Icon from "../../components/Icon.astro";
-import { rooms, accommodation, site, img } from "../../data/site";
+import { rooms, accommodation, site, img, url } from "../../data/site";
 
 const strip = ["balcony-2.jpg", "junior-suite-2.jpg", "suite-sitting.jpg", "family-room-2.jpg", "deluxe-double-1.jpg", "suite-corridor.jpg"]
   .map((f) => ({ full: img(f), thumb: img(f), alt: "Yugharling Resort room" }));
@@ -66,7 +66,7 @@ const strip = ["balcony-2.jpg", "junior-suite-2.jpg", "suite-sitting.jpg", "fami
         <h2>A Note on<br />Balconies</h2>
         <p class="parallax__text">{accommodation.balconyNote}</p>
         <div class="parallax__actions">
-          <a href="/booking/" class="btn btn--light">Book Your Stay</a>
+          <a href={url("/booking/")} class="btn btn--light">Book Your Stay</a>
         </div>
       </div>
     </section>

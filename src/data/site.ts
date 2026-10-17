@@ -2,9 +2,12 @@
 // Text and contact details follow the resort's "Revised Website Content" document word for word;
 // room rates and the Bumthang photos are from https://www.yugharlingresort.com/
 
-const photo = (file: string) => `/images/resort/${file}`;
+/** Prefix a root-relative path with the site base (e.g. "/yugharlingresort.com" on GitHub Pages) */
+export const url = (path: string) => `${import.meta.env.BASE_URL.replace(/\/$/, "")}${path}`;
+
+const photo = (file: string) => url(`/images/resort/${file}`);
 // The resort's own photography
-export const img = (file: string) => `/images/yugharling/${file}`;
+export const img = (file: string) => url(`/images/yugharling/${file}`);
 
 export const site = {
   name: "Yugharling Resort & Wellness Spa",
@@ -32,16 +35,16 @@ export const telHref = (n: string) => {
 };
 
 export const navLeft = [
-  { href: "/", label: "Home" },
-  { href: "/about/", label: "About Us" },
-  { href: "/accommodation/", label: "Rooms & Suites" },
-  { href: "/facilities/", label: "Facilities" },
+  { href: url("/"), label: "Home" },
+  { href: url("/about/"), label: "About Us" },
+  { href: url("/accommodation/"), label: "Rooms & Suites" },
+  { href: url("/facilities/"), label: "Facilities" },
 ];
 
 export const navRight = [
-  { href: "/things-to-do/", label: "Bumthang" },
-  { href: "/booking/", label: "Booking" },
-  { href: "/contact/", label: "Contact" },
+  { href: url("/things-to-do/"), label: "Bumthang" },
+  { href: url("/booking/"), label: "Booking" },
+  { href: url("/contact/"), label: "Contact" },
 ];
 
 export const socials = [
@@ -84,9 +87,9 @@ export const about = {
 
 // Discover Yugharling
 export const amenities = [
-  { num: "01", title: "Rooms & Suites", text: "Warm Bhutanese interiors, restful spaces and beautiful views of the Bumthang Valley.", image: img("junior-suite.jpg"), href: "/accommodation/" },
-  { num: "02", title: "Dining & Lounge", text: "Enjoy dining, refreshments and relaxed social spaces in our distinctive Bhutanese-named venues.", image: img("dining-3.jpg"), href: "/facilities/#dining" },
-  { num: "03", title: "Spa & Wellness", text: "Restore body and mind in a wellness environment designed for quiet comfort and relaxation.", image: img("hot-stone-bath.jpg"), href: "/facilities/#wellness" },
+  { num: "01", title: "Rooms & Suites", text: "Warm Bhutanese interiors, restful spaces and beautiful views of the Bumthang Valley.", image: img("junior-suite.jpg"), href: url("/accommodation/") },
+  { num: "02", title: "Dining & Lounge", text: "Enjoy dining, refreshments and relaxed social spaces in our distinctive Bhutanese-named venues.", image: img("dining-3.jpg"), href: url("/facilities/#dining") },
+  { num: "03", title: "Spa & Wellness", text: "Restore body and mind in a wellness environment designed for quiet comfort and relaxation.", image: img("hot-stone-bath.jpg"), href: url("/facilities/#wellness") },
 ];
 
 // Comfort by Nature (short guest-focused reference; details on the Sustainability page)
@@ -199,7 +202,7 @@ const roomList = [
 
 export const rooms = roomList.map((r) => ({
   ...r,
-  href: `/accommodation/${r.slug}/`,
+  href: url(`/accommodation/${r.slug}/`),
   price: formatNu(r.rate),
   // First sentence of the description, for cards
   text: r.intro.split(/(?<=\.)\s/)[0],

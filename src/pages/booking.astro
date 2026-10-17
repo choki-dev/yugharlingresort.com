@@ -10,7 +10,7 @@ import Footer from "../components/Footer.astro";
 import PageHero from "../components/PageHero.astro";
 import SectionTitle from "../components/SectionTitle.astro";
 import Icon from "../components/Icon.astro";
-import { rooms, site } from "../data/site";
+import { rooms, site, url } from "../data/site";
 ---
 
 <Layout title={`Booking | ${site.name}`}>
@@ -20,7 +20,7 @@ import { rooms, site } from "../data/site";
 
   <main>
     <PageHero
-      image="/images/yugharling/resort-view.jpg"
+      image={url("/images/yugharling/resort-view.jpg")}
       script="reserve your"
       title="Stay"
       crumbs={[{ label: "Booking" }]}

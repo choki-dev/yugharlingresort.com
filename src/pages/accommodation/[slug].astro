@@ -9,7 +9,7 @@ import PageHero from "../../components/PageHero.astro";
 import BookingBar from "../../components/BookingBar.astro";
 import SectionTitle from "../../components/SectionTitle.astro";
 import Icon from "../../components/Icon.astro";
-import { rooms, site, whatsappLink, accommodation } from "../../data/site";
+import { rooms, site, whatsappLink, accommodation, url } from "../../data/site";
 
 export function getStaticPaths() {
   return rooms.map((room) => ({ params: { slug: room.slug }, props: { room } }));
@@ -31,7 +31,7 @@ const icons: Record<string, string> = { Bed: "bed-s", Inventory: "door", Locatio
       image={r.image}
       script={r.script}
       title={r.title}
-      crumbs={[{ label: "Rooms & Suites", href: "/accommodation/" }, { label: r.title }]}
+      crumbs={[{ label: "Rooms & Suites", href: url("/accommodation/") }, { label: r.title }]}
       cta={{ href: "#overview", label: "Room Details" }}
     />
 
@@ -66,9 +66,9 @@ const icons: Record<string, string> = { Bed: "bed-s", Inventory: "door", Locatio
           </ul>
           <div class="room-rate__actions">
             <a href={reserve} class="btn btn--teal" target="_blank" rel="noopener">Reserve Now</a>
-            <a href={`/booking/?room=${r.slug}`} class="btn btn--light">Book Your Stay</a>
+            <a href={url(`/booking/?room=${r.slug}`)} class="btn btn--light">Book Your Stay</a>
           </div>
-          <a href="/accommodation/" class="room-rate__link">Compare all rooms</a>
+          <a href={url("/accommodation/")} class="room-rate__link">Compare all rooms</a>
         </aside>
       </div>
     </section>

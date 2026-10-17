@@ -5,7 +5,7 @@
 // (see scripts/booking.js and scripts/booking-form.js).
 import "flatpickr/dist/flatpickr.min.css";
 import Icon from "./Icon.astro";
-import { booking, site } from "../data/site";
+import { booking, site, url } from "../data/site";
 
 interface Props {
   /** "hero" overlaps the bottom of the hero slider; "static" sits in normal flow */
@@ -17,7 +17,7 @@ const { variant = "static" } = Astro.props;
 <div class:list={["booking-bar-wrap", `booking-bar-wrap--${variant}`]}>
   <form
     class="booking-bar js-booking-bar"
-    action="/booking/"
+    action={url("/booking/")}
     method="get"
     novalidate
     data-max-adults={booking.maxAdults}

@@ -4,7 +4,7 @@ import flatpickr from "flatpickr";
 const $ = (sel, ctx = document) => ctx.querySelector(sel);
 const $$ = (sel, ctx = document) => Array.from(ctx.querySelectorAll(sel));
 
-const BOOKING_URL = "/booking/";
+const BOOKING_URL = `${import.meta.env.BASE_URL.replace(/\/$/, "")}/booking/`;
 
 const plural = (n, one, many) => `${n} ${n === 1 ? one : many}`;
 const guestsLabel = (a, c) => `${plural(a, "Adult", "Adults")}, ${plural(c, "Child", "Children")}`;

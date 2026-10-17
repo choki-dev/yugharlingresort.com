@@ -1,6 +1,6 @@
 ---
 import Icon from "./Icon.astro";
-import { heroSlides } from "../data/site";
+import { heroSlides, url } from "../data/site";
 ---
 
 <section class="hero" id="home">
@@ -14,8 +14,8 @@ import { heroSlides } from "../data/site";
         {i === 0 ? <h1 class="hero__title anim">{s.title}</h1> : <h2 class="hero__title anim">{s.title}</h2>}
         <p class="hero__text anim">{s.text}</p>
         <div class="hero__actions anim">
-          <a href="/accommodation/" class="btn btn--light">Explore Our Rooms</a>
-          <a href="/booking/" class="btn btn--teal">Book Your Stay</a>
+          <a href={url("/accommodation/")} class="btn btn--light">Explore Our Rooms</a>
+          <a href={url("/booking/")} class="btn btn--teal">Book Your Stay</a>
         </div>
       </div>
     </div>

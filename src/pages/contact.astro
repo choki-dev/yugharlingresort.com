@@ -8,7 +8,7 @@ import Footer from "../components/Footer.astro";
 import PageHero from "../components/PageHero.astro";
 import SectionTitle from "../components/SectionTitle.astro";
 import Icon from "../components/Icon.astro";
-import { site, whatsappLink, telHref } from "../data/site";
+import { site, whatsappLink, telHref, url } from "../data/site";
 import { contact } from "../data/pages";
 
 const cards = [
@@ -16,7 +16,7 @@ const cards = [
   { icon: "phone", label: "Telephone", lines: [site.phone, site.phone2, site.phone3].map((n) => ({ text: n, href: telHref(n) })) },
   { icon: "whatsapp", label: "Mobile / WhatsApp", lines: [{ text: site.mobile, href: whatsappLink(["I have a question about Yugharling Resort."]), external: true }] },
   { icon: "mail", label: "Email", lines: [site.email, site.email2].map((e) => ({ text: e, href: `mailto:${e}` })) },
-  { icon: "view", label: "Website", lines: [{ text: site.website, href: "/" }] },
+  { icon: "view", label: "Website", lines: [{ text: site.website, href: url("/") }] },
 ];
 const delays = ["", "reveal-d1", "reveal-d2", "reveal-d3", ""];
 ---
@@ -28,7 +28,7 @@ const delays = ["", "reveal-d1", "reveal-d2", "reveal-d3", ""];
 
   <main>
     <PageHero
-      image="/images/yugharling/reception.jpg"
+      image={url("/images/yugharling/reception.jpg")}
       script="get in"
       title="Touch"
       crumbs={[{ label: "Contact Us" }]}
@@ -64,7 +64,7 @@ const delays = ["", "reveal-d1", "reveal-d2", "reveal-d3", ""];
             <p>{contact.note}</p>
           </SectionTitle>
           <div class="contact-actions">
-            <a href="/booking/" class="btn btn--teal">Book Your Stay</a>
+            <a href={url("/booking/")} class="btn btn--teal">Book Your Stay</a>
             <a href={contact.mapLink} class="btn btn--outlined" target="_blank" rel="noopener">Get Directions</a>
           </div>
         </div>

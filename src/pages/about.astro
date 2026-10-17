@@ -7,7 +7,7 @@ import Overlays from "../components/Overlays.astro";
 import Footer from "../components/Footer.astro";
 import PageHero from "../components/PageHero.astro";
 import SectionTitle from "../components/SectionTitle.astro";
-import { site, img, aboutPage } from "../data/site";
+import { site, img, aboutPage, url } from "../data/site";
 
 const labels = ["About Us", "Our heritage", "Our hospitality"];
 ---
@@ -48,8 +48,8 @@ const labels = ["About Us", "Our heritage", "Our hospitality"];
         <h2><span class="thin">Plan your stay in Bumthang</span>Book Your Stay</h2>
         <svg class="ornament"><use href="#i-wave" /></svg>
         <div class="avail-cta__actions">
-          <a href="/accommodation/" class="btn btn--light">Explore Our Rooms</a>
-          <a href="/booking/" class="btn btn--teal">Book Your Stay</a>
+          <a href={url("/accommodation/")} class="btn btn--light">Explore Our Rooms</a>
+          <a href={url("/booking/")} class="btn btn--teal">Book Your Stay</a>
         </div>
       </div>
     </section>

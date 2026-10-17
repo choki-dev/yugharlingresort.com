@@ -1,7 +1,7 @@
 ---
 // Home "Comfort by Nature": a short reference that links to the Sustainability page
 import SectionTitle from "./SectionTitle.astro";
-import { comfort } from "../data/site";
+import { comfort, url } from "../data/site";
 ---
 
 <section class="section" id="comfort">
@@ -14,7 +14,7 @@ import { comfort } from "../data/site";
       <SectionTitle label="Sustainability" thin="Bhutanese tradition, modern efficiency" title="Comfort by Nature" class="reveal">
         <p>{comfort.text}</p>
       </SectionTitle>
-      <a href="/sustainability/" class="btn btn--outlined reveal">Our Sustainability</a>
+      <a href={url("/sustainability/")} class="btn btn--outlined reveal">Our Sustainability</a>
     </div>
   </div>
 </section>

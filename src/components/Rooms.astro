@@ -1,7 +1,7 @@
 ---
 import Icon from "./Icon.astro";
 import SectionTitle from "./SectionTitle.astro";
-import { rooms } from "../data/site";
+import { rooms, url } from "../data/site";
 
 const delays = ["", "reveal-d1", "reveal-d2"];
 const metaIcons = ["bed-s", "users", "view"];
@@ -13,7 +13,7 @@ const metaIcons = ["bed-s", "users", "view"];
       <SectionTitle label="Rooms & Suites" thin="Newly renovated" title="Rooms & Suites" ornament={false} class="reveal">
         <p>Step into newly renovated guest rooms where traditional Bhutanese craftsmanship blends with modern refinement. Natural wood finishes, ambient lighting and locally crafted furnishings create warm, restful spaces inspired by the tranquility of Bumthang.</p>
       </SectionTitle>
-      <a href="/accommodation/" class="btn btn--outlined reveal">Explore Our Rooms</a>
+      <a href={url("/accommodation/")} class="btn btn--outlined reveal">Explore Our Rooms</a>
     </div>
     <div class="cards-3">
       {rooms.map((r, i) => (

@@ -8,10 +8,10 @@ import Overlays from "../components/Overlays.astro";
 import Footer from "../components/Footer.astro";
 import PageHero from "../components/PageHero.astro";
 import SectionTitle from "../components/SectionTitle.astro";
-import { site, whatsappLink } from "../data/site";
+import { site, whatsappLink, url } from "../data/site";
 import { experience } from "../data/pages";
 
-const photo = (f: string) => `/images/resort/${f}`;
+const photo = (f: string) => url(`/images/resort/${f}`);
 const delays = ["", "reveal-d1", "reveal-d2"];
 ---
 
@@ -51,7 +51,7 @@ const delays = ["", "reveal-d1", "reveal-d2"];
         <h2><span class="thin">Yugharling Resort &amp; Wellness Spa</span>Plan Your Stay in Bumthang</h2>
         <svg class="ornament"><use href="#i-wave" /></svg>
         <div class="avail-cta__actions">
-          <a href="/booking/" class="btn btn--light">Book Your Stay</a>
+          <a href={url("/booking/")} class="btn btn--light">Book Your Stay</a>
           <a href={whatsappLink(["I would like help planning my stay in Bumthang."])} class="btn btn--teal" target="_blank" rel="noopener">WhatsApp Us</a>
         </div>
       </div>

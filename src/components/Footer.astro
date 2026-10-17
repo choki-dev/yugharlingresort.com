@@ -2,16 +2,16 @@
 import Icon from "./Icon.astro";
 import Logo from "./Logo.astro";
 import Socials from "./Socials.astro";
-import { site, telHref } from "../data/site";
+import { site, telHref, url } from "../data/site";
 
 const links = [
-  { href: "/about/", label: "About Us" },
-  { href: "/accommodation/", label: "Rooms & Suites" },
-  { href: "/facilities/", label: "Facilities" },
-  { href: "/sustainability/", label: "Sustainability" },
-  { href: "/things-to-do/", label: "Experience Bumthang" },
-  { href: "/booking/", label: "Booking" },
-  { href: "/contact/", label: "Contact" },
+  { href: url("/about/"), label: "About Us" },
+  { href: url("/accommodation/"), label: "Rooms & Suites" },
+  { href: url("/facilities/"), label: "Facilities" },
+  { href: url("/sustainability/"), label: "Sustainability" },
+  { href: url("/things-to-do/"), label: "Experience Bumthang" },
+  { href: url("/booking/"), label: "Booking" },
+  { href: url("/contact/"), label: "Contact" },
 ];
 const year = new Date().getFullYear();
 ---

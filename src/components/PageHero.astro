@@ -1,6 +1,7 @@
 ---
 // Banner for internal pages — deliberately different from the home slider:
 // shorter, centred, framed, with a breadcrumb, wave ornament and scroll cue.
+import { url } from "../data/site";
 interface Props {
   image: string;
   script: string;
@@ -19,7 +20,7 @@ const { image, script, title, crumbs = [{ label: title }], cta } = Astro.props;
 
   <div class="container page-hero__content">
     <nav class="page-hero__crumbs" aria-label="Breadcrumb">
-      <a href="/">Home</a>
+      <a href={url("/")}>Home</a>
       {crumbs.map((c) => (
         <>
           <span class="sep" aria-hidden="true">/</span>

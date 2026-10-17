@@ -2,11 +2,11 @@
 import Icon from "./Icon.astro";
 import Logo from "./Logo.astro";
 import HeaderIcons from "./HeaderIcons.astro";
-import { site, navLeft, navRight } from "../data/site";
+import { site, navLeft, navRight, url } from "../data/site";
 
 // Highlight the page we're on ("/accommodation/standard-room/" lights up Accommodation)
 const path = Astro.url.pathname.endsWith("/") ? Astro.url.pathname : `${Astro.url.pathname}/`;
-const isActive = (href: string) => (href === "/" ? path === "/" : path.startsWith(href));
+const isActive = (href: string) => (href === url("/") ? path === url("/") : path.startsWith(href));
 ---
 
 <header class="site-header" id="siteHeader">

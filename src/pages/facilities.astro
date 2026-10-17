@@ -8,7 +8,7 @@ import Footer from "../components/Footer.astro";
 import PageHero from "../components/PageHero.astro";
 import SectionTitle from "../components/SectionTitle.astro";
 import Icon from "../components/Icon.astro";
-import { site, whatsappLink } from "../data/site";
+import { site, whatsappLink, url } from "../data/site";
 import { facilityGroups, keyAmenities } from "../data/pages";
 
 const all = facilityGroups.flatMap((g) => g.items);
@@ -21,7 +21,7 @@ const all = facilityGroups.flatMap((g) => g.items);
 
   <main>
     <PageHero
-      image="/images/yugharling/hot-stone-bath-1.jpg"
+      image={url("/images/yugharling/hot-stone-bath-1.jpg")}
       script="dining, wellness &"
       title="Facilities"
       crumbs={[{ label: "Facilities" }]}
