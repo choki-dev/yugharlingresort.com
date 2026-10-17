@@ -1,0 +1,18 @@
+---
+// variant "light" = white lettering for dark backgrounds, "color" = navy lettering.
+// "auto" renders both so CSS can swap them (mobile bar changes background on scroll).
+interface Props {
+  variant?: "light" | "color" | "auto";
+  label?: string;
+}
+const { variant = "light", label = "Yugharling Resort — home" } = Astro.props;
+---
+
+<a href="/" class:list={["logo", { "logo--color": variant === "color" }]} aria-label={label}>
+  {(variant === "light" || variant === "auto") && (
+    <img class="logo__light" src="/images/logo-light.png" alt="Yugharling Resort" width="150" height="100" />
+  )}
+  {(variant === "color" || variant === "auto") && (
+    <img class="logo__color" src="/images/logo-color.png" alt="Yugharling Resort" width="150" height="100" />
+  )}
+</a>

@@ -1,0 +1,8 @@
+---
+import Icon from "./Icon.astro";
+import { socials } from "../data/site";
+---
+
+<div class="footer-social">
+  {socials.map((s) => <a href="#" aria-label={s.label}><Icon name={s.icon} /></a>)}
+</div>

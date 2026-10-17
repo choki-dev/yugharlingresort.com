@@ -1,0 +1,13 @@
+---
+// Full-width photo strip that opens the lightbox. Defaults to the home gallery.
+import { gallery } from "../data/site";
+
+interface Props {
+  items?: { full: string; thumb: string; alt: string }[];
+}
+const { items = gallery } = Astro.props;
+---
+
+<div class="gallery-strip js-lightbox" id="gallery">
+  {items.map((g) => <a href={g.full}><img src={g.thumb} alt={g.alt} loading="lazy" /></a>)}
+</div>

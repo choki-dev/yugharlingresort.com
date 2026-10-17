@@ -1,0 +1,74 @@
+---
+// "Check Availability" bar, modelled on tshangrihotel.com:
+// date range · guests dropdown · scrolling notice · submit.
+// Submitting opens the booking form with the chosen dates and guests filled in
+// (see scripts/booking.js and scripts/booking-form.js).
+import "flatpickr/dist/flatpickr.min.css";
+import Icon from "./Icon.astro";
+import { booking, site } from "../data/site";
+
+interface Props {
+  /** "hero" overlaps the bottom of the hero slider; "static" sits in normal flow */
+  variant?: "hero" | "static";
+}
+const { variant = "static" } = Astro.props;
+---
+
+<div class:list={["booking-bar-wrap", `booking-bar-wrap--${variant}`]}>
+  <form
+    class="booking-bar js-booking-bar"
+    action="/booking/"
+    method="get"
+    novalidate
+    data-max-adults={booking.maxAdults}
+    data-max-children={booking.maxChildren}
+    data-whatsapp={site.whatsapp}
+  >
+    <label class="bb-group bb-group--dates">
+      <Icon name="calendar" class="bb-icon" />
+      <span class="bb-field">
+        <span class="bb-label">Check-in → Check-out</span>
+        <input type="text" class="bb-dates" placeholder="Select your dates" aria-label="Check-in and check-out dates" autocomplete="off" />
+      </span>
+      <input type="hidden" name="checkin" class="bb-checkin" />
+      <input type="hidden" name="checkout" class="bb-checkout" />
+    </label>
+
+    <div class="bb-group bb-group--guests" tabindex="0" role="button" aria-haspopup="true" aria-expanded="false">
+      <Icon name="user" class="bb-icon" />
+      <span class="bb-field">
+        <span class="bb-label">Guests</span>
+        <span class="bb-guests-total">2 Adults, 0 Children</span>
+      </span>
+      <div class="guests-dropdown" role="dialog" aria-label="Choose guests">
+        <div class="guest-row">
+          <div class="guest-label"><strong>Adult</strong><span>Ages 13 or above</span></div>
+          <div class="guest-controls">
+            <button type="button" class="btn-ctrl" data-target="adults" data-dir="-1" aria-label="Remove adult">−</button>
+            <span class="count-val" data-count-for="adults">2</span>
+            <button type="button" class="btn-ctrl" data-target="adults" data-dir="1" aria-label="Add adult">+</button>
+          </div>
+        </div>
+        <div class="guest-row">
+          <div class="guest-label"><strong>Child</strong><span>Ages 12 or below</span></div>
+          <div class="guest-controls">
+            <button type="button" class="btn-ctrl" data-target="children" data-dir="-1" aria-label="Remove child">−</button>
+            <span class="count-val" data-count-for="children">0</span>
+            <button type="button" class="btn-ctrl" data-target="children" data-dir="1" aria-label="Add child">+</button>
+          </div>
+        </div>
+        <button type="button" class="btn-ok">Ok</button>
+      </div>
+      <input type="hidden" name="adults" value="2" class="bb-adults" />
+      <input type="hidden" name="children" value="0" class="bb-children" />
+    </div>
+
+    <div class="bb-group bb-group--notice" aria-hidden="true">
+      <div class="bb-marquee"><span>{booking.notice}</span></div>
+    </div>
+
+    <button type="submit" class="bb-submit">Check Availability</button>
+  </form>
+</div>
+
+<script src="../scripts/booking.js"></script>

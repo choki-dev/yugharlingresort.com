@@ -1,0 +1,48 @@
+---
+// 7. Sustainability — the dedicated page other pages link to
+import Layout from "../layouts/Layout.astro";
+import Preloader from "../components/Preloader.astro";
+import Header from "../components/Header.astro";
+import Overlays from "../components/Overlays.astro";
+import Footer from "../components/Footer.astro";
+import PageHero from "../components/PageHero.astro";
+import SectionTitle from "../components/SectionTitle.astro";
+import { site, img, sustainability } from "../data/site";
+
+const delays = ["", "reveal-d1", "reveal-d2"];
+---
+
+<Layout title={`Sustainability | ${site.name}`}>
+  <Preloader />
+  <Header />
+  <Overlays />
+
+  <main>
+    <PageHero
+      image={img("garden.jpg")}
+      script="comfort by"
+      title="Nature"
+      crumbs={[{ label: "Sustainability" }]}
+      cta={{ href: "#comfort", label: "Read More" }}
+    />
+
+    <section class="section section--mist" id="comfort">
+      <div class="container">
+        <SectionTitle label="Sustainability" thin="Traditional knowledge, modern technology" title="Comfort by Nature" center class="reveal">
+          <p>{sustainability.intro}</p>
+        </SectionTitle>
+        <div class="cards-3">
+          {sustainability.items.map((s, i) => (
+            <article class:list={["blog-card reveal", delays[i % 3]]}>
+              <div class="blog-card__img"><img src={s.image} alt={s.title} loading="lazy" /></div>
+              <h4>{s.title}</h4>
+              <p>{s.text}</p>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+</Layout>

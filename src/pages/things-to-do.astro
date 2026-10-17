@@ -1,0 +1,62 @@
+---
+// 8. Experience Bumthang — general categories only. Specific attractions, distances, travel
+// times and seasonal activities are to be added once the resort confirms the exact details.
+import Layout from "../layouts/Layout.astro";
+import Preloader from "../components/Preloader.astro";
+import Header from "../components/Header.astro";
+import Overlays from "../components/Overlays.astro";
+import Footer from "../components/Footer.astro";
+import PageHero from "../components/PageHero.astro";
+import SectionTitle from "../components/SectionTitle.astro";
+import { site, whatsappLink } from "../data/site";
+import { experience } from "../data/pages";
+
+const photo = (f: string) => `/images/resort/${f}`;
+const delays = ["", "reveal-d1", "reveal-d2"];
+---
+
+<Layout title={`Experience Bumthang | ${site.name}`}>
+  <Preloader />
+  <Header />
+  <Overlays />
+
+  <main>
+    <PageHero
+      image={photo("Bumthang.jpg")}
+      script="experience"
+      title="Bumthang"
+      crumbs={[{ label: "Experience Bumthang" }]}
+      cta={{ href: "#experiences", label: "Explore" }}
+    />
+
+    <section class="section section--mist" id="experiences">
+      <div class="container">
+        <SectionTitle label="Experience Bumthang" thin="At an unhurried pace" title="Discover the region" center class="reveal">
+          <p>{experience.intro}</p>
+        </SectionTitle>
+        <div class="cards-3">
+          {experience.categories.map((c, i) => (
+            <article class:list={["blog-card reveal", delays[i % 3]]}>
+              <div class="blog-card__img"><img src={c.image} alt={c.alt} loading="lazy" /></div>
+              <h4>{c.text}</h4>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section class="section section--dark avail-cta">
+      <div class="container reveal">
+        <span class="label">Contact &amp; Booking</span>
+        <h2><span class="thin">Yugharling Resort &amp; Wellness Spa</span>Plan Your Stay in Bumthang</h2>
+        <svg class="ornament"><use href="#i-wave" /></svg>
+        <div class="avail-cta__actions">
+          <a href="/booking/" class="btn btn--light">Book Your Stay</a>
+          <a href={whatsappLink(["I would like help planning my stay in Bumthang."])} class="btn btn--teal" target="_blank" rel="noopener">WhatsApp Us</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+</Layout>

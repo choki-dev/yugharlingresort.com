@@ -1,0 +1,45 @@
+---
+// Zig-zag room card (same look as the facility cards) with View Room + Reserve Now
+import Icon from "./Icon.astro";
+import { whatsappLink, type rooms } from "../data/site";
+
+interface Props {
+  room: (typeof rooms)[number];
+  index: number;
+}
+const { room: r, index } = Astro.props;
+const reserve = whatsappLink(["I would like to make a reservation:", `• Room type: ${r.title}`, `• Rate: from ${r.price} per night`, "", "Please let me know the availability."]);
+---
+
+<article class="avail-card reveal">
+  <a href={r.href} class="avail-card__media" aria-label={`View ${r.title}`}>
+    <img src={r.image} alt={r.title} loading="lazy" />
+    {r.tag && <span class="tour-card__tag">{r.tag}</span>}
+    <div class="tour-card__price"><strong>{r.price}</strong><span>/ night</span></div>
+  </a>
+
+  <div class="avail-card__body">
+    <span class="step__num">{String(index + 1).padStart(2, "0")}</span>
+    <span class="label">{r.label}</span>
+    <h3><a href={r.href}>{r.title}</a></h3>
+    <svg class="ornament"><use href="#i-wave" /></svg>
+    <p>{r.text}</p>
+    <div class="tour-card__meta">
+      <span><Icon name="door" />{r.count} {r.count === 1 ? "room" : "rooms"}</span>
+      <span><Icon name="bed-s" />{r.beds}</span>
+      <span><Icon name="users" />Sleeps {r.occupancy}</span>
+      {r.balcony && <span><Icon name="balcony" />Balcony</span>}
+    </div>
+
+    <div class="avail-card__foot">
+      <div class="avail-card__rate">
+        <span class="label">Rates from</span>
+        <div><strong>{r.price}</strong><span>/ night</span></div>
+      </div>
+      <div class="avail-card__actions">
+        <a class="btn btn--teal" href={reserve} target="_blank" rel="noopener">Reserve Now</a>
+        <a href={r.href} class="link-more">View Room</a>
+      </div>
+    </div>
+  </div>
+</article>

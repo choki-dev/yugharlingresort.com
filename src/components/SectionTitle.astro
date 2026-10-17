@@ -1,0 +1,18 @@
+---
+interface Props {
+  label: string;
+  thin?: string;
+  title: string;
+  center?: boolean;
+  ornament?: boolean;
+  class?: string;
+}
+const { label, thin, title, center = false, ornament = true, class: className } = Astro.props;
+---
+
+<div class:list={["section-title", { "section-title--center": center }, className]}>
+  <span class="label">{label}</span>
+  <h2>{thin && <span class="thin">{thin}</span>}{title}</h2>
+  {ornament && <svg class="ornament"><use href="#i-wave" /></svg>}
+  <slot />
+</div>

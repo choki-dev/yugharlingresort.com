@@ -1,0 +1,34 @@
+---
+import Icon from "./Icon.astro";
+import { heroSlides } from "../data/site";
+---
+
+<section class="hero" id="home">
+  <div class="hero__side-label">Yugharling · Bumthang · Bhutan</div>
+
+  {heroSlides.map((s, i) => (
+    <div class:list={["hero__slide", { "is-active": i === 0 }]}>
+      <div class="hero__bg" style={`background-image:url('${s.image}')`}></div>
+      <div class="container hero__content">
+        <span class="hero__script anim">{s.script}</span>
+        {i === 0 ? <h1 class="hero__title anim">{s.title}</h1> : <h2 class="hero__title anim">{s.title}</h2>}
+        <p class="hero__text anim">{s.text}</p>
+        <div class="hero__actions anim">
+          <a href="/accommodation/" class="btn btn--light">Explore Our Rooms</a>
+          <a href="/booking/" class="btn btn--teal">Book Your Stay</a>
+        </div>
+      </div>
+    </div>
+  ))}
+
+  <div class="hero__pagination" role="tablist" aria-label="Slides">
+    {heroSlides.map((_, i) => (
+      <button class:list={["hero__dot", { "is-active": i === 0 }]} aria-label={`Slide ${i + 1}`}>{String(i + 1).padStart(2, "0")}</button>
+    ))}
+  </div>
+  <div class="hero__arrows">
+    <button class="hero__arrow js-hero-prev" aria-label="Previous slide"><Icon name="arrow-l" /></button>
+    <button class="hero__arrow js-hero-next" aria-label="Next slide"><Icon name="arrow-r" /></button>
+  </div>
+  <div class="hero__progress" id="heroProgress"></div>
+</section>

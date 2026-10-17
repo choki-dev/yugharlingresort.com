@@ -1,0 +1,59 @@
+---
+// 2. About Us
+import Layout from "../layouts/Layout.astro";
+import Preloader from "../components/Preloader.astro";
+import Header from "../components/Header.astro";
+import Overlays from "../components/Overlays.astro";
+import Footer from "../components/Footer.astro";
+import PageHero from "../components/PageHero.astro";
+import SectionTitle from "../components/SectionTitle.astro";
+import { site, img, aboutPage } from "../data/site";
+
+const labels = ["About Us", "Our heritage", "Our hospitality"];
+---
+
+<Layout title={`About Us | ${site.name}`}>
+  <Preloader />
+  <Header />
+  <Overlays />
+
+  <main>
+    <PageHero
+      image={img("resort-view.jpg")}
+      script="about"
+      title="Yugharling"
+      crumbs={[{ label: "About Us" }]}
+      cta={{ href: "#about", label: "Read More" }}
+    />
+
+    {aboutPage.map((s, i) => (
+      <section class:list={["section", { "section--mist": i % 2 === 1 }]} id={i === 0 ? "about" : undefined}>
+        <div class="container about__grid">
+          <div class="about__media reveal">
+            <img class="img-main" src={s.image} alt={s.title} loading="lazy" />
+            <img class="img-small" src={s.imageSmall} alt="" loading="lazy" />
+          </div>
+          <div class="about__content">
+            <SectionTitle label={labels[i]} thin={site.name} title={s.title} class="reveal">
+              {s.text.map((p) => <p>{p}</p>)}
+            </SectionTitle>
+          </div>
+        </div>
+      </section>
+    ))}
+
+    <section class="section section--dark avail-cta">
+      <div class="container reveal">
+        <span class="label">Rooms &amp; Suites</span>
+        <h2><span class="thin">Plan your stay in Bumthang</span>Book Your Stay</h2>
+        <svg class="ornament"><use href="#i-wave" /></svg>
+        <div class="avail-cta__actions">
+          <a href="/accommodation/" class="btn btn--light">Explore Our Rooms</a>
+          <a href="/booking/" class="btn btn--teal">Book Your Stay</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+</Layout>

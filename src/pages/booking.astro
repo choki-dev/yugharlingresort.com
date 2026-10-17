@@ -1,0 +1,131 @@
+---
+// Booking request — fields from yugharlingresort.com/booking/
+// The site has no server, so the request is sent as a pre-filled WhatsApp message.
+import "flatpickr/dist/flatpickr.min.css";
+import Layout from "../layouts/Layout.astro";
+import Preloader from "../components/Preloader.astro";
+import Header from "../components/Header.astro";
+import Overlays from "../components/Overlays.astro";
+import Footer from "../components/Footer.astro";
+import PageHero from "../components/PageHero.astro";
+import SectionTitle from "../components/SectionTitle.astro";
+import Icon from "../components/Icon.astro";
+import { rooms, site } from "../data/site";
+---
+
+<Layout title={`Booking | ${site.name}`}>
+  <Preloader />
+  <Header />
+  <Overlays />
+
+  <main>
+    <PageHero
+      image="/images/yugharling/resort-view.jpg"
+      script="reserve your"
+      title="Stay"
+      crumbs={[{ label: "Booking" }]}
+      cta={{ href: "#booking-form", label: "Book Your Stay" }}
+    />
+
+    <section class="section section--mist" id="booking-form">
+      <div class="container booking-page">
+        <form class="booking-request reveal" id="bookingRequest" novalidate data-whatsapp={site.whatsapp}>
+          <SectionTitle label="Booking" thin="Reservation request" title="Book Your Stay" />
+
+          <fieldset>
+            <legend>Personal information</legend>
+            <div class="form-grid">
+              <label class="form-field">
+                <span>Full name *</span>
+                <input name="name" type="text" autocomplete="name" required />
+              </label>
+              <label class="form-field">
+                <span>Phone / WhatsApp *</span>
+                <input name="phone" type="tel" autocomplete="tel" required />
+              </label>
+              <label class="form-field">
+                <span>Email</span>
+                <input name="email" type="email" autocomplete="email" />
+              </label>
+              <label class="form-field">
+                <span>Country</span>
+                <input name="country" type="text" autocomplete="country-name" />
+              </label>
+            </div>
+          </fieldset>
+
+          <fieldset>
+            <legend>Travel requirements</legend>
+            <div class="form-grid">
+              <label class="form-field form-field--wide">
+                <span>Check-in → Check-out *</span>
+                <input name="dates" type="text" class="js-dates" placeholder="Select your dates" autocomplete="off" required />
+              </label>
+              <label class="form-field">
+                <span>Room type</span>
+                <select name="room">
+                  <option value="">Please select</option>
+                  {rooms.map((r) => <option value={r.title} data-slug={r.slug}>{r.title}</option>)}
+                </select>
+              </label>
+              <label class="form-field">
+                <span>Bed type</span>
+                <select name="bed">
+                  <option value="">Please select</option>
+                  <option>Double bed</option>
+                  <option>Twin beds</option>
+                </select>
+              </label>
+              <label class="form-field">
+                <span>No. of adults</span>
+                <select name="adults">
+                  {Array.from({ length: 10 }, (_, i) => <option selected={i === 1}>{i + 1}</option>)}
+                </select>
+              </label>
+              <label class="form-field">
+                <span>No. of kids</span>
+                <select name="kids">
+                  {Array.from({ length: 7 }, (_, i) => <option>{i}</option>)}
+                </select>
+              </label>
+              <label class="form-field form-field--wide">
+                <span>Special requests</span>
+                <textarea name="notes" rows="4" placeholder="Arrival time, extra bed, excursions, dietary needs…"></textarea>
+              </label>
+            </div>
+          </fieldset>
+
+          <p class="form-error" id="bookingError" role="alert"></p>
+          <div class="booking-request__submit">
+            <button type="submit" class="btn btn--teal"><Icon name="whatsapp" class="btn__icon" />Send via WhatsApp</button>
+            <p>Your request opens in WhatsApp, ready to send to our reservations team. Nothing is stored on this website.</p>
+          </div>
+        </form>
+
+        <aside class="booking-aside">
+          <div class="booking-aside__card reveal reveal-d1">
+            <span class="label">Room rates</span>
+            <h4>Rates from</h4>
+            <ul class="rate-list">
+              {rooms.map((r) => <li><a href={r.href}>{r.title}</a><span>{r.price}</span></li>)}
+            </ul>
+            <p class="booking-aside__small">Per room per night. Additional bed with extra charge.</p>
+          </div>
+          <div class="booking-aside__card booking-aside__card--dark reveal reveal-d2">
+            <span class="label">Reservations</span>
+            <h4>Prefer to call?</h4>
+            <ul class="footer-contact">
+              <li><Icon name="whatsapp" /><span>Mobile / WhatsApp<br /><a href={`tel:${site.mobile.replace(/[^+\d]/g, "")}`}>{site.mobile}</a></span></li>
+              <li><Icon name="phone" /><span>Telephone<br /><a href={site.phoneHref}>{site.phone}</a></span></li>
+              <li><Icon name="mail" /><span><a href={`mailto:${site.email}`}>{site.email}</a></span></li>
+            </ul>
+          </div>
+        </aside>
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+</Layout>
+
+<script src="../scripts/booking-form.js"></script>

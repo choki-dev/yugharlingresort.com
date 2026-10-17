@@ -1,0 +1,55 @@
+---
+import Icon from "./Icon.astro";
+import Logo from "./Logo.astro";
+import HeaderIcons from "./HeaderIcons.astro";
+import { site, navLeft, navRight } from "../data/site";
+
+// Highlight the page we're on ("/accommodation/standard-room/" lights up Accommodation)
+const path = Astro.url.pathname.endsWith("/") ? Astro.url.pathname : `${Astro.url.pathname}/`;
+const isActive = (href: string) => (href === "/" ? path === "/" : path.startsWith(href));
+---
+
+<header class="site-header" id="siteHeader">
+  <div class="top-bar">
+    <div class="container top-bar__inner">
+      <span>{site.tagline}</span>
+      <div class="top-bar__right">
+        <a href={site.phoneHref}><Icon name="phone" />{site.phone}</a>
+        <a href={`mailto:${site.email}`}><Icon name="mail" />{site.email}</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="main-header">
+    <div class="container main-header__inner">
+      <nav class="nav" aria-label="Primary left">
+        {navLeft.map((l) => <a href={l.href} class:list={{ "is-active": isActive(l.href) }}>{l.label}</a>)}
+      </nav>
+      <Logo variant="light" />
+      <div class="nav nav--right">
+        {navRight.map((l) => <a href={l.href} class:list={{ "is-active": isActive(l.href) }}>{l.label}</a>)}
+        <HeaderIcons />
+      </div>
+    </div>
+  </div>
+
+  <!-- Mobile header -->
+  <div class="container mobile-bar">
+    <Logo variant="auto" />
+    <HeaderIcons />
+  </div>
+</header>
+
+<!-- Sticky header (desktop, appears on scroll) -->
+<div class="sticky-header" id="stickyHeader">
+  <div class="container main-header__inner">
+    <nav class="nav" aria-label="Sticky left">
+      {navLeft.map((l) => <a href={l.href} class:list={{ "is-active": isActive(l.href) }}>{l.label}</a>)}
+    </nav>
+    <Logo variant="color" />
+    <div class="nav nav--right">
+      {navRight.map((l) => <a href={l.href} class:list={{ "is-active": isActive(l.href) }}>{l.label}</a>)}
+      <HeaderIcons />
+    </div>
+  </div>
+</div>

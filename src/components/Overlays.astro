@@ -1,0 +1,34 @@
+---
+// Side panel (desktop side area + mobile menu) and gallery lightbox
+import Icon from "./Icon.astro";
+import Logo from "./Logo.astro";
+import Socials from "./Socials.astro";
+import { site, navLeft, navRight, telHref, whatsappLink } from "../data/site";
+
+const allLinks = [...navLeft, ...navRight];
+---
+
+<div class="overlay" id="overlay"></div>
+<aside class="side-panel" id="sidePanel" aria-label="Side menu">
+  <button class="icon-btn side-panel__close js-panel-close" aria-label="Close menu"><Icon name="close" /></button>
+  <Logo variant="light" />
+  <nav class="side-panel__nav" aria-label="Mobile">
+    {allLinks.map((l) => <a href={l.href}>{l.label}</a>)}
+  </nav>
+  <h5>Contact Details</h5>
+  <ul class="side-panel__contact">
+    <li><Icon name="phone" /><a href={site.phoneHref}>{site.phone}</a></li>
+    <li><Icon name="whatsapp" /><a href={telHref(site.mobile)}>{site.mobile}</a></li>
+    <li><Icon name="mail" /><a href={`mailto:${site.email}`}>{site.email}</a></li>
+  </ul>
+  <Socials />
+</aside>
+
+<div class="lightbox" id="lightbox" role="dialog" aria-label="Image preview">
+  <button class="icon-btn lightbox__close" aria-label="Close"><Icon name="close" /></button>
+  <button class="icon-btn lightbox__prev" aria-label="Previous image"><Icon name="arrow-l" /></button>
+  <img src="" alt="" />
+  <button class="icon-btn lightbox__next" aria-label="Next image"><Icon name="arrow-r" /></button>
+</div>
+
+<a class="wa-chat" href={whatsappLink(["I have a question about Yugharling Resort."])} target="_blank" rel="noopener" aria-label="Chat with us on WhatsApp"><Icon name="whatsapp" /></a>

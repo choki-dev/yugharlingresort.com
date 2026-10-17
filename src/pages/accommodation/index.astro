@@ -1,0 +1,78 @@
+---
+// Accommodation overview
+import Layout from "../../layouts/Layout.astro";
+import Preloader from "../../components/Preloader.astro";
+import Header from "../../components/Header.astro";
+import Overlays from "../../components/Overlays.astro";
+import Footer from "../../components/Footer.astro";
+import PageHero from "../../components/PageHero.astro";
+import BookingBar from "../../components/BookingBar.astro";
+import SectionTitle from "../../components/SectionTitle.astro";
+import RoomRow from "../../components/RoomRow.astro";
+import Gallery from "../../components/Gallery.astro";
+import Icon from "../../components/Icon.astro";
+import { rooms, accommodation, site, img } from "../../data/site";
+
+const strip = ["balcony-2.jpg", "junior-suite-2.jpg", "suite-sitting.jpg", "family-room-2.jpg", "deluxe-double-1.jpg", "suite-corridor.jpg"]
+  .map((f) => ({ full: img(f), thumb: img(f), alt: "Yugharling Resort room" }));
+---
+
+<Layout title={`Rooms & Suites | ${site.name}`}>
+  <Preloader />
+  <Header />
+  <Overlays />
+
+  <main>
+    <PageHero
+      image={img("deluxe-twin.jpg")}
+      script="newly renovated"
+      title="Rooms"
+      crumbs={[{ label: "Rooms & Suites" }]}
+      cta={{ href: "#room-list", label: "View Rooms" }}
+    />
+
+    <BookingBar variant="hero" />
+
+    <section class="section" id="about">
+      <div class="container about__grid">
+        <div class="about__media reveal">
+          <img class="img-main" src={img("deluxe-double.jpg")} alt="Standard Deluxe room interior" loading="lazy" />
+          <img class="img-small" src={img("junior-suite-1.jpg")} alt="Junior Suite interior" loading="lazy" />
+          <div class="about__stamp"><div><strong data-count={rooms.length}>0</strong><span>Room<br />types</span></div></div>
+        </div>
+        <div class="about__content">
+          <SectionTitle label="Rooms & Suites" thin="Newly renovated" title="Room Features" class="reveal">
+            <p>{accommodation.intro}</p>
+          </SectionTitle>
+          <ul class="check-list reveal">
+            {accommodation.features.map((f) => <li><Icon name="check" />{f}</li>)}
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section--mist" id="room-list">
+      <div class="container">
+        <SectionTitle label="Rooms & Suites" thin="Choose your stay" title="Our rooms" center class="reveal" />
+        <div class="avail-list">
+          {rooms.map((r, i) => <RoomRow room={r} index={i} />)}
+        </div>
+      </div>
+    </section>
+
+    <section class="parallax parallax--dim" style={`background-image:url('${img("balcony.jpg")}')`}>
+      <div class="container reveal">
+        <span class="label">Balconies</span>
+        <h2>A Note on<br />Balconies</h2>
+        <p class="parallax__text">{accommodation.balconyNote}</p>
+        <div class="parallax__actions">
+          <a href="/booking/" class="btn btn--light">Book Your Stay</a>
+        </div>
+      </div>
+    </section>
+
+    <Gallery items={strip} />
+  </main>
+
+  <Footer />
+</Layout>

@@ -1,0 +1,120 @@
+---
+// One page per room type — content from yugharlingresort.com/accommodation/<room>/
+import Layout from "../../layouts/Layout.astro";
+import Preloader from "../../components/Preloader.astro";
+import Header from "../../components/Header.astro";
+import Overlays from "../../components/Overlays.astro";
+import Footer from "../../components/Footer.astro";
+import PageHero from "../../components/PageHero.astro";
+import BookingBar from "../../components/BookingBar.astro";
+import SectionTitle from "../../components/SectionTitle.astro";
+import Icon from "../../components/Icon.astro";
+import { rooms, site, whatsappLink, accommodation } from "../../data/site";
+
+export function getStaticPaths() {
+  return rooms.map((room) => ({ params: { slug: room.slug }, props: { room } }));
+}
+
+const { room: r } = Astro.props;
+const others = rooms.filter((o) => o.slug !== r.slug);
+const reserve = whatsappLink(["I would like to make a reservation:", `• Room type: ${r.title}`, `• Rate: from ${r.price} per night`, "", "Please let me know the availability."]);
+const icons: Record<string, string> = { Bed: "bed-s", Inventory: "door", Location: "pin", Balcony: "balcony", View: "view", "Valley view": "view" };
+---
+
+<Layout title={`${r.title} | ${site.name}`}>
+  <Preloader />
+  <Header />
+  <Overlays />
+
+  <main>
+    <PageHero
+      image={r.image}
+      script={r.script}
+      title={r.title}
+      crumbs={[{ label: "Rooms & Suites", href: "/accommodation/" }, { label: r.title }]}
+      cta={{ href: "#overview", label: "Room Details" }}
+    />
+
+    <BookingBar variant="hero" />
+
+    <section class="section" id="overview">
+      <div class="container room-overview">
+        <div class="reveal">
+          <SectionTitle label={r.label} thin="Room overview" title={r.title}>
+            <p>{r.intro}</p>
+          </SectionTitle>
+          <dl class="spec-list">
+            {r.details.map(([label, value]) => (
+              <div>
+                <Icon name={icons[label]} />
+                <dt>{label}</dt>
+                <dd>{value}</dd>
+              </div>
+            ))}
+          </dl>
+        </div>
+
+        <aside class="price-card price-card--featured room-rate reveal reveal-d1">
+          <span class="price-card__badge">Rates from</span>
+          <Icon name="bed" class="price-card__icon" />
+          <h4>{r.title}</h4>
+          <div class="price-card__price"><sup>Nu.</sup><strong>{r.rate.toLocaleString("en-US")}</strong></div>
+          <span class="price-card__per">/ per night</span>
+          <ul>
+            <li>Sleeps {r.occupancy}</li>
+            <li>{r.beds}</li>
+          </ul>
+          <div class="room-rate__actions">
+            <a href={reserve} class="btn btn--teal" target="_blank" rel="noopener">Reserve Now</a>
+            <a href={`/booking/?room=${r.slug}`} class="btn btn--light">Book Your Stay</a>
+          </div>
+          <a href="/accommodation/" class="room-rate__link">Compare all rooms</a>
+        </aside>
+      </div>
+    </section>
+
+    <section class="section section--mist room-gallery-section">
+      <div class="container">
+        <SectionTitle label="Gallery" thin="Take a look inside" title="Room photos" center class="reveal" />
+        <div class="room-gallery js-lightbox reveal">
+          {r.gallery.map((src, i) => <a href={src}><img src={src} alt={`${r.title} — photo ${i + 1}`} loading="lazy" /></a>)}
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <SectionTitle label="Rooms & Suites" thin="In every room" title="Room Features" center class="reveal" />
+        <ul class="check-list check-list--3 reveal">
+          {accommodation.features.map((f) => <li><Icon name="check" />{f}</li>)}
+        </ul>
+      </div>
+    </section>
+
+    <section class="section section--mist">
+      <div class="container">
+        <SectionTitle label="Accommodation" thin="Explore more" title="Other rooms" center class="reveal" />
+        <div class="cards-4">
+          {others.map((o, i) => (
+            <article class:list={["tour-card reveal", ["", "reveal-d1", "reveal-d2", "reveal-d3"][i]]}>
+              <a href={o.href} class="tour-card__img">
+                <img src={o.image} alt={o.title} loading="lazy" />
+                {o.tag && <span class="tour-card__tag">{o.tag}</span>}
+                <div class="tour-card__price"><strong>{o.price}</strong><span>/ night</span></div>
+              </a>
+              <div class="tour-card__body">
+                <h4><a href={o.href}>{o.title}</a></h4>
+                <div class="tour-card__meta">
+                  <span><Icon name="users" />{o.occupancy} guests</span>
+                  <span><Icon name="view" />{o.valleyView ? "Valley view" : "Main building"}</span>
+                </div>
+              </div>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+</Layout>

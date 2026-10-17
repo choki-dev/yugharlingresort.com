@@ -1,0 +1,27 @@
+---
+import SectionTitle from "./SectionTitle.astro";
+import { amenities } from "../data/site";
+
+const delays = ["", "reveal-d1", "reveal-d2", "reveal-d3"];
+---
+
+<section class="section section--mist" id="facilities">
+  <div class="container">
+    <SectionTitle label="Discover" thin="Rooms, dining & wellness" title="Discover Yugharling" center class="reveal" />
+    <div class="cards-3">
+      {amenities.map((a, i) => (
+        <article class:list={["service-card reveal", delays[i]]}>
+          <div class="service-card__img">
+            <img src={a.image} alt={a.title} loading="lazy" />
+            <span class="service-card__num">{a.num}</span>
+          </div>
+          <div class="service-card__body">
+            <h4>{a.title}</h4>
+            <p>{a.text}</p>
+            <a href={a.href} class="link-more">View More</a>
+          </div>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>

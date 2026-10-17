@@ -1,0 +1,90 @@
+---
+// Facilities — 4. Dining, Bar & Lounge · 5. Spa & Wellness · 6. Meetings & Events · 9. Facilities & Amenities
+import Layout from "../layouts/Layout.astro";
+import Preloader from "../components/Preloader.astro";
+import Header from "../components/Header.astro";
+import Overlays from "../components/Overlays.astro";
+import Footer from "../components/Footer.astro";
+import PageHero from "../components/PageHero.astro";
+import SectionTitle from "../components/SectionTitle.astro";
+import Icon from "../components/Icon.astro";
+import { site, whatsappLink } from "../data/site";
+import { facilityGroups, keyAmenities } from "../data/pages";
+
+const all = facilityGroups.flatMap((g) => g.items);
+---
+
+<Layout title={`Facilities | ${site.name}`}>
+  <Preloader />
+  <Header />
+  <Overlays />
+
+  <main>
+    <PageHero
+      image="/images/yugharling/hot-stone-bath-1.jpg"
+      script="dining, wellness &"
+      title="Facilities"
+      crumbs={[{ label: "Facilities" }]}
+      cta={{ href: "#dining", label: "Explore" }}
+    />
+
+    {facilityGroups.map((g, gi) => (
+      <section class:list={["section", { "section--mist": gi % 2 === 0 }]} id={g.id}>
+        <div class="container">
+          <SectionTitle label="Facilities" thin={g.items.map((f) => f.name).join(" · ")} title={g.title} center class="reveal">
+            {g.intro && <p>{g.intro}</p>}
+            {gi === 0 && (
+              <nav class="facility-index" aria-label="Facilities">
+                {all.map((f) => <a href={`#${f.id}`}><span>{f.num}</span>{f.name}</a>)}
+              </nav>
+            )}
+          </SectionTitle>
+
+          <div class="avail-list">
+            {g.items.map((f) => (
+              <article class="avail-card facility-card reveal" id={f.id}>
+                <div class="avail-card__media facility-card__media js-lightbox">
+                  <a href={f.images[0]} class="facility-card__main"><img src={f.images[0]} alt={`${f.name} — ${f.local}`} loading="lazy" /></a>
+                  {f.images.length > 1 && (
+                    <div class="facility-card__thumbs">
+                      {f.images.slice(1, 4).map((src) => <a href={src}><img src={src} alt={`${f.name} photo`} loading="lazy" /></a>)}
+                    </div>
+                  )}
+                </div>
+                <div class="avail-card__body">
+                  <span class="step__num">{f.num}</span>
+                  <h3><span class="facility-card__local">{f.local}</span>{f.name}</h3>
+                  <svg class="ornament"><use href="#i-wave" /></svg>
+                  {f.text.map((t) => <p>{t}</p>)}
+                  <div class="avail-card__foot">
+                    <a class="btn btn--outlined" href={whatsappLink([`I have a question about ${f.name} (${f.local}).`])} target="_blank" rel="noopener">
+                      Enquire on WhatsApp
+                    </a>
+                  </div>
+                </div>
+              </article>
+            ))}
+          </div>
+
+          {g.note && (
+            <div class="facility-note reveal">
+              <h4>{g.note.title}</h4>
+              <p>{g.note.text}</p>
+            </div>
+          )}
+        </div>
+      </section>
+    ))}
+
+    <section class="section" id="amenities">
+      <div class="container">
+        <SectionTitle label="Facilities & Amenities" thin="Also at Yugharling" title="Comfort throughout" center class="reveal" />
+        <ul class="check-list check-list--2 reveal">
+          {keyAmenities.map((a) => <li><Icon name="check" />{a}</li>)}
+        </ul>
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+</Layout>

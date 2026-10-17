@@ -1,0 +1,41 @@
+---
+// Banner for internal pages — deliberately different from the home slider:
+// shorter, centred, framed, with a breadcrumb, wave ornament and scroll cue.
+interface Props {
+  image: string;
+  script: string;
+  title: string;
+  /** Breadcrumb trail after "Home"; defaults to just the title */
+  crumbs?: { label: string; href?: string }[];
+  /** Where the scroll cue points (usually the first section) */
+  cta?: { href: string; label: string };
+}
+const { image, script, title, crumbs = [{ label: title }], cta } = Astro.props;
+---
+
+<section class="page-hero">
+  <div class="page-hero__bg" style={`background-image:url('${image}')`}></div>
+  <div class="page-hero__frame" aria-hidden="true"></div>
+
+  <div class="container page-hero__content">
+    <nav class="page-hero__crumbs" aria-label="Breadcrumb">
+      <a href="/">Home</a>
+      {crumbs.map((c) => (
+        <>
+          <span class="sep" aria-hidden="true">/</span>
+          {c.href ? <a href={c.href}>{c.label}</a> : <span aria-current="page">{c.label}</span>}
+        </>
+      ))}
+    </nav>
+    <span class="page-hero__script">{script}</span>
+    <h1 class="page-hero__title">{title}</h1>
+    <svg class="ornament page-hero__ornament"><use href="#i-wave" /></svg>
+  </div>
+
+  {cta && (
+    <a href={cta.href} class="page-hero__scroll" aria-label={cta.label}>
+      <span>Scroll</span>
+      <i aria-hidden="true"></i>
+    </a>
+  )}
+</section>

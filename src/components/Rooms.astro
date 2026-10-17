@@ -1,0 +1,37 @@
+---
+import Icon from "./Icon.astro";
+import SectionTitle from "./SectionTitle.astro";
+import { rooms } from "../data/site";
+
+const delays = ["", "reveal-d1", "reveal-d2"];
+const metaIcons = ["bed-s", "users", "view"];
+---
+
+<section class="section" id="rooms">
+  <div class="container">
+    <div class="tours__head">
+      <SectionTitle label="Rooms & Suites" thin="Newly renovated" title="Rooms & Suites" ornament={false} class="reveal">
+        <p>Step into newly renovated guest rooms where traditional Bhutanese craftsmanship blends with modern refinement. Natural wood finishes, ambient lighting and locally crafted furnishings create warm, restful spaces inspired by the tranquility of Bumthang.</p>
+      </SectionTitle>
+      <a href="/accommodation/" class="btn btn--outlined reveal">Explore Our Rooms</a>
+    </div>
+    <div class="cards-3">
+      {rooms.map((r, i) => (
+        <article class:list={["tour-card reveal", delays[i % 3]]}>
+          <div class="tour-card__img">
+            <img src={r.image} alt={r.title} loading="lazy" />
+            {r.tag && <span class="tour-card__tag">{r.tag}</span>}
+            <div class="tour-card__price"><strong>{r.price}</strong><span>/ night</span></div>
+          </div>
+          <div class="tour-card__body">
+            <h4><a href={r.href}>{r.title}</a></h4>
+            <p>{r.text}</p>
+            <div class="tour-card__meta">
+              {r.meta.map((m, j) => <span><Icon name={metaIcons[j]} />{m}</span>)}
+            </div>
+          </div>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>

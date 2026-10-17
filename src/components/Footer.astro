@@ -1,0 +1,49 @@
+---
+import Icon from "./Icon.astro";
+import Logo from "./Logo.astro";
+import Socials from "./Socials.astro";
+import { site, telHref } from "../data/site";
+
+const links = [
+  { href: "/about/", label: "About Us" },
+  { href: "/accommodation/", label: "Rooms & Suites" },
+  { href: "/facilities/", label: "Facilities" },
+  { href: "/sustainability/", label: "Sustainability" },
+  { href: "/things-to-do/", label: "Experience Bumthang" },
+  { href: "/booking/", label: "Booking" },
+  { href: "/contact/", label: "Contact" },
+];
+const year = new Date().getFullYear();
+---
+
+<footer class="site-footer" id="contact">
+  <div class="footer-top">
+    <div class="container footer-grid">
+      <div>
+        <Logo variant="light" />
+        <Socials />
+      </div>
+      <div>
+        <h5>The Resort</h5>
+        <ul class="footer-links">
+          {links.map((l) => <li><a href={l.href}>{l.label}</a></li>)}
+        </ul>
+      </div>
+      <div>
+        <h5>Get In Touch</h5>
+        <ul class="footer-contact">
+          <li><Icon name="phone" /><a href={site.phoneHref}>{site.phone}</a></li>
+          <li><Icon name="whatsapp" /><a href={telHref(site.mobile)}>{site.mobile}</a></li>
+          <li><Icon name="mail" /><a href={`mailto:${site.email}`}>{site.email}</a></li>
+          <li><Icon name="pin" /><span>{site.address}</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="container footer-bottom__inner">
+      <span>© <span id="year">{year}</span> {site.name}</span>
+      <span class="footer-credit">Website Designed And Developed by <a href="https://abit.bt" target="_blank" rel="noopener">aBit Private Limited</a></span>
+    </div>
+  </div>
+</footer>

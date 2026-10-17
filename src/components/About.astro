@@ -1,0 +1,20 @@
+---
+import SectionTitle from "./SectionTitle.astro";
+import { about } from "../data/site";
+---
+
+<section class="section" id="about">
+  <div class="container about__grid">
+    <div class="about__media reveal">
+      <img class="img-main" src={about.imgMain} alt={about.imgMainAlt} loading="lazy" />
+      <img class="img-small" src={about.imgSmall} alt={about.imgSmallAlt} loading="lazy" />
+      <div class="about__stamp"><div><strong data-count={about.stamp.count}>0</strong><span set:html={about.stamp.text} /></div></div>
+    </div>
+
+    <div class="about__content">
+      <SectionTitle label="Welcome" thin="Yugharling Resort & Wellness Spa" title="Welcome to Yugharling" class="reveal">
+        {about.intro.map((p) => <p>{p}</p>)}
+      </SectionTitle>
+    </div>
+  </div>
+</section>

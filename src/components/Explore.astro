@@ -1,0 +1,26 @@
+---
+import { explore } from "../data/site";
+
+const delays = ["reveal-d1", "reveal-d2", "", "reveal-d1", "reveal-d2"];
+---
+
+<section class="section section--mist" id="bumthang">
+  <div class="container">
+    <div class="destinations__grid">
+      <div class="dest dest--intro dest--wide reveal">
+        <div>
+          <span class="label">{explore.label}</span>
+          <h3>{explore.title}</h3>
+          <p>{explore.text}</p>
+          <a href="/things-to-do/" class="btn btn--teal btn--small" style="margin-top:14px">Experience Bumthang</a>
+        </div>
+      </div>
+      {explore.tiles.map((e, i) => (
+        <a href="/things-to-do/" class:list={["dest reveal", e.cls, delays[i]]}>
+          <img src={e.image} alt={e.alt} loading="lazy" />
+          <div class="dest__text"><span class="label">{e.label}</span><h4>{e.title}</h4></div>
+        </a>
+      ))}
+    </div>
+  </div>
+</section>
