@@ -1,9 +1,10 @@
 // @ts-check
 import { defineConfig } from "astro/config";
 
-// Static build served by Cloudflare Workers (static assets) — see wrangler.jsonc.
-// Hosted at the domain root, so no base path is needed.
+// Live domain, served from the root (Cloudflare Workers — see wrangler.jsonc).
+// GitHub Pages preview (see .github/workflows/deploy.yml) overrides both: SITE_URL=https://choki-dev.github.io, BASE_PATH=/yugharlingresort.com
 export default defineConfig({
-  site: "https://yugharlingresort.com",
+  site: process.env.SITE_URL || "https://yugharlingresort.com",
+  base: process.env.BASE_PATH || "/",
   trailingSlash: "ignore",
 });

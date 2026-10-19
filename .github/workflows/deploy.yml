@@ -1,0 +1,38 @@
+# Builds the site on every push to main and publishes it to the gh-pages branch,
+# which GitHub Pages serves at https://choki-dev.github.io/yugharlingresort.com/.
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    env:
+      SITE_URL: https://choki-dev.github.io
+      BASE_PATH: /yugharlingresort.com
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run build
+      # .nojekyll is added by the action, so Pages serves the _astro folder as is
+      - uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./dist
+          publish_branch: gh-pages
+          force_orphan: true
+          commit_message: "Deploy site to GitHub Pages"
