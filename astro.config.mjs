@@ -1,10 +1,9 @@
 // @ts-check
 import { defineConfig } from "astro/config";
 
-// Hosted on GitHub Pages at https://choki-dev.github.io/yugharlingresort.com/
-// If the site moves to its own domain (yugharlingresort.com), set base to "/".
+// Static build served by Cloudflare Workers (static assets) — see wrangler.jsonc.
+// Hosted at the domain root, so no base path is needed.
 export default defineConfig({
-  site: "https://choki-dev.github.io",
-  base: "/yugharlingresort.com",
+  site: "https://yugharlingresort.com",
   trailingSlash: "ignore",
 });

@@ -2,7 +2,7 @@
 // Text and contact details follow the resort's "Revised Website Content" document word for word;
 // room rates and the Bumthang photos are from https://www.yugharlingresort.com/
 
-/** Prefix a root-relative path with the site base (e.g. "/yugharlingresort.com" on GitHub Pages) */
+/** Prefix a root-relative path with the site base (empty when served from the domain root) */
 export const url = (path: string) => `${import.meta.env.BASE_URL.replace(/\/$/, "")}${path}`;
 
 const photo = (file: string) => url(`/images/resort/${file}`);
