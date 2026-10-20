@@ -385,6 +385,50 @@ h5 { font-size: 18px; line-height: 1.39em; letter-spacing: .075em; }
 .hero__text { max-width: 620px; margin: -18px 0 36px; color: rgba(255,255,255,.9); font-size: 17px; line-height: 1.7; text-shadow: 0 1px 8px rgba(0,0,0,.4); }
 .hero__actions { display: flex; align-items: center; gap: 20px; flex-wrap: wrap; }
 
+/* Text pinned to the sky at the top of the photo, keeping the subject below it clear; sized by
+   viewport height so it fits on short screens too. The shade sits behind the text only. */
+.hero__slide--top::after {
+  background:
+    linear-gradient(180deg, rgba(27,35,64,.75) 0%, rgba(27,35,64,.45) 30%, rgba(27,35,64,.05) 60%),
+    linear-gradient(90deg, rgba(27,35,64,.45) 0%, rgba(27,35,64,0) 60%);
+}
+/* Bright sky (clouds): crop from higher up so the sky stays in frame, deeper shade behind the text */
+.hero__slide--bright .hero__bg { background-position: center 22%; }
+.hero__slide--bright::after {
+  background:
+    linear-gradient(180deg, rgba(27,35,64,.85) 0%, rgba(27,35,64,.6) 35%, rgba(27,35,64,.1) 65%),
+    linear-gradient(90deg, rgba(27,35,64,.5) 0%, rgba(27,35,64,0) 65%);
+}
+/* Photo with a plain night sky (resort-view.jpg): the photo slides down (further on short
+   screens) and the space above it is filled with its own sky colours (sampled from the top
+   row), its top edge faded in so there's no seam. */
+.hero__slide--sky { background: linear-gradient(90deg, #00206d, #013797 70%, #06235f); }
+.hero__slide--sky .hero__bg {
+  top: clamp(0px, 1240px - 107vh, 18vh);
+  background-position: center top; /* crops the dark foreground hill, not the building */
+  -webkit-mask-image: linear-gradient(to bottom, transparent, #000 14%);
+          mask-image: linear-gradient(to bottom, transparent, #000 14%);
+}
+.hero__slide--top .hero__content { justify-content: flex-start; padding-top: calc(137px + 7vh); }
+.hero__slide--top .hero__script { font-size: clamp(22px, 2.7vh, 30px); }
+.hero__slide--top .hero__title { font-size: clamp(36px, min(6.8vh, 9vw), 78px); margin: 4px 0 1.4vh; }
+.hero__slide--top .hero__text { max-width: 820px; margin: 0 0 1.8vh; font-size: 15px; line-height: 1.55; }
+.hero__slide--top .hero__actions .btn { padding-top: 11px; padding-bottom: 11px; }
+@media (max-height: 720px) {
+  .hero__slide--top .hero__text { display: none; }
+}
+@media (max-width: 1100px) {
+  .hero__slide--top .hero__content { padding-top: calc(70px + 9vh); }
+}
+@media (max-width: 1100px) and (orientation: portrait) {
+  /* Portrait: show the left of the photo, where the sky runs lowest */
+  .hero__slide--sky .hero__bg { top: 21vh; background-position: 12% bottom; }
+}
+@media (max-width: 680px) {
+  .hero__slide--top .hero__script { font-size: 26px; }
+  .hero__slide--top .hero__text { font-size: 15px; }
+}
+
 /* Staggered entrance per active slide */
 .hero__slide .anim { opacity: 0; transform: translateY(40px); transition: opacity .9s ease, transform .9s var(--ease); }
 .hero__slide.is-active .anim { opacity: 1; transform: none; }

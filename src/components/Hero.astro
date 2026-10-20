@@ -7,7 +7,7 @@ import { heroSlides, url } from "../data/site";
   <div class="hero__side-label">Yugharling · Bumthang · Bhutan</div>
 
   {heroSlides.map((s, i) => (
-    <div class:list={["hero__slide", { "is-active": i === 0 }]}>
+    <div class:list={["hero__slide", { "is-active": i === 0, "hero__slide--top": s.align === "top", "hero__slide--sky": s.sky === "night", "hero__slide--bright": s.sky === "bright" }]}>
       <div class="hero__bg" style={`background-image:url('${s.image}')`}></div>
       <div class="container hero__content">
         <span class="hero__script anim">{s.script}</span>

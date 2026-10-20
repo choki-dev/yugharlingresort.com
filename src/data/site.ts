@@ -57,18 +57,24 @@ export const socials = [
 /* ---------- 1. Home page ---------- */
 
 // Hero Section: "A Sanctuary of Serenity in the Heart of Bumthang"
+// align "top" keeps the text in the sky, clear of the subject below.
+// sky "night" = plain night sky the photo can be shifted into; "bright" = clouds, needs a deeper shade.
 export const heroSlides = [
   {
     script: "A Sanctuary of Serenity in the Heart of",
     title: "Bumthang",
     text: "Surrounded by sacred monasteries, pine-covered hills and the crystal-clear waters of the Chamkhar Chhu, Yugharling Resort & Wellness Spa offers a peaceful retreat where Bhutanese tradition, warm hospitality and modern comfort come together.",
     image: img("resort-view.jpg"),
+    align: "top",
+    sky: "night",
   },
   {
     script: "A Sanctuary of Serenity in the Heart of",
     title: "Bumthang",
     text: "Inspired by the spiritual heritage and natural beauty of Bumthang, our resort invites you to slow down, reconnect and experience the timeless rhythm of Bhutanese life.",
     image: img("balcony.jpg"),
+    align: "top",
+    sky: "bright",
   },
 ];
 
