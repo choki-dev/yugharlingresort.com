@@ -3,7 +3,8 @@
 import Icon from "./Icon.astro";
 import Logo from "./Logo.astro";
 import Socials from "./Socials.astro";
-import { site, navLeft, navRight, telHref, whatsappLink } from "../data/site";
+import { site, navLeft, navRight, whatsappLink } from "../data/site";
+import { contact } from "../data/pages";
 
 const allLinks = [...navLeft, ...navRight];
 ---
@@ -11,23 +12,30 @@ const allLinks = [...navLeft, ...navRight];
 <div class="overlay" id="overlay"></div>
 <aside class="side-panel" id="sidePanel" aria-label="Side menu">
   <button class="icon-btn side-panel__close js-panel-close" aria-label="Close menu"><Icon name="close" /></button>
-  <Logo variant="light" />
+  <Logo />
   <nav class="side-panel__nav" aria-label="Mobile">
     {allLinks.map((l) => <a href={l.href}>{l.label}</a>)}
   </nav>
   <h5>Contact Details</h5>
   <ul class="side-panel__contact">
-    <li><Icon name="phone" /><a href={site.phoneHref}>{site.phone}</a></li>
-    <li><Icon name="whatsapp" /><a href={telHref(site.mobile)}>{site.mobile}</a></li>
+    <li><Icon name="phone" /><a href={site.phoneHref}>Front desk: {site.phone}</a></li>
+    <li><Icon name="whatsapp" /><a href={whatsappLink(["I have a question about Yugharling Resort."])} target="_blank" rel="noopener">Front desk: {site.mobile}</a></li>
+    <li><Icon name="whatsapp" /><a href={whatsappLink(["I would like to make a reservation."], site.reservationWhatsapp)} target="_blank" rel="noopener">Reservations: {site.reservationMobile}</a></li>
     <li><Icon name="mail" /><a href={`mailto:${site.email}`}>{site.email}</a></li>
   </ul>
+  <h5>Location</h5>
+  <ul class="side-panel__contact">
+    <li><Icon name="pin" /><a href={contact.mapLink} target="_blank" rel="noopener">{site.address}</a></li>
+  </ul>
+  <a href={contact.mapLink} class="side-panel__map" target="_blank" rel="noopener">Get Directions</a>
+  <h5>Follow Us</h5>
   <Socials />
 </aside>
 
-<div class="lightbox" id="lightbox" role="dialog" aria-label="Image preview">
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Image preview">
   <button class="icon-btn lightbox__close" aria-label="Close"><Icon name="close" /></button>
   <button class="icon-btn lightbox__prev" aria-label="Previous image"><Icon name="arrow-l" /></button>
-  <img src="" alt="" />
+  <img alt="" />
   <button class="icon-btn lightbox__next" aria-label="Next image"><Icon name="arrow-r" /></button>
 </div>
 

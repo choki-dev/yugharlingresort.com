@@ -25,7 +25,7 @@ const isActive = (href: string) => (href === url("/") ? path === url("/") : path
       <nav class="nav" aria-label="Primary left">
         {navLeft.map((l) => <a href={l.href} class:list={{ "is-active": isActive(l.href) }}>{l.label}</a>)}
       </nav>
-      <Logo variant="light" />
+      <Logo />
       <div class="nav nav--right">
         {navRight.map((l) => <a href={l.href} class:list={{ "is-active": isActive(l.href) }}>{l.label}</a>)}
         <HeaderIcons />
@@ -35,7 +35,7 @@ const isActive = (href: string) => (href === url("/") ? path === url("/") : path
 
   <!-- Mobile header -->
   <div class="container mobile-bar">
-    <Logo variant="auto" />
+    <Logo />
     <HeaderIcons />
   </div>
 </header>
@@ -46,7 +46,7 @@ const isActive = (href: string) => (href === url("/") ? path === url("/") : path
     <nav class="nav" aria-label="Sticky left">
       {navLeft.map((l) => <a href={l.href} class:list={{ "is-active": isActive(l.href) }}>{l.label}</a>)}
     </nav>
-    <Logo variant="color" />
+    <Logo />
     <div class="nav nav--right">
       {navRight.map((l) => <a href={l.href} class:list={{ "is-active": isActive(l.href) }}>{l.label}</a>)}
       <HeaderIcons />

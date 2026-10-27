@@ -14,7 +14,7 @@ import { facilityGroups, keyAmenities } from "../data/pages";
 const all = facilityGroups.flatMap((g) => g.items);
 ---
 
-<Layout title={`Facilities | ${site.name}`}>
+<Layout title={`Facilities | ${site.name}`} description="Dining, bar and lounge, spa and wellness with sauna and hot-stone bath, conference and meeting rooms, and a prayer room at Yugharling Resort, Bumthang.">
   <Preloader />
   <Header />
   <Overlays />
@@ -44,10 +44,10 @@ const all = facilityGroups.flatMap((g) => g.items);
             {g.items.map((f) => (
               <article class="avail-card facility-card reveal" id={f.id}>
                 <div class="avail-card__media facility-card__media js-lightbox">
-                  <a href={f.images[0]} class="facility-card__main"><img src={f.images[0]} alt={`${f.name} — ${f.local}`} loading="lazy" /></a>
+                  <a href={f.images[0].full} class="facility-card__main"><img src={f.images[0].full} alt={`${f.name} — ${f.local}`} loading="lazy" /></a>
                   {f.images.length > 1 && (
                     <div class="facility-card__thumbs">
-                      {f.images.slice(1, 4).map((src) => <a href={src}><img src={src} alt={`${f.name} photo`} loading="lazy" /></a>)}
+                      {f.images.slice(1, 4).map((g) => <a href={g.full}><img src={g.thumb} alt={`${f.name} photo`} loading="lazy" /></a>)}
                     </div>
                   )}
                 </div>

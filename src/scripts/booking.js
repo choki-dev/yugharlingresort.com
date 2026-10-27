@@ -63,34 +63,29 @@ function initBar(form) {
     })
   );
 
+  const toggle = $(".bb-toggle", guestsGroup);
   function toggleDropdown(open) {
     dropdown.classList.toggle("show", open);
-    guestsGroup.setAttribute("aria-expanded", String(open));
+    toggle.setAttribute("aria-expanded", String(open));
   }
-  guestsGroup.addEventListener("click", () => toggleDropdown(!dropdown.classList.contains("show")));
+  toggle.addEventListener("click", () => toggleDropdown(!dropdown.classList.contains("show")));
   guestsGroup.addEventListener("keydown", (e) => {
-    if ((e.key === "Enter" || e.key === " ") && e.target === guestsGroup) {
-      e.preventDefault();
-      toggleDropdown(!dropdown.classList.contains("show"));
+    if (e.key === "Escape" && dropdown.classList.contains("show")) {
+      toggleDropdown(false);
+      toggle.focus();
     }
-    if (e.key === "Escape") toggleDropdown(false);
   });
-  dropdown.addEventListener("click", (e) => e.stopPropagation());
-  $(".btn-ok", form).addEventListener("click", () => toggleDropdown(false));
+  // Close when focus or a click moves outside the guests group
+  guestsGroup.addEventListener("focusout", (e) => {
+    if (e.relatedTarget && !guestsGroup.contains(e.relatedTarget)) toggleDropdown(false);
+  });
+  $(".btn-ok", form).addEventListener("click", () => {
+    toggleDropdown(false);
+    toggle.focus();
+  });
   document.addEventListener("click", (e) => {
     if (!guestsGroup.contains(e.target)) toggleDropdown(false);
   });
-
-  /** Read the current selection */
-  function getState() {
-    const [start, end] = picker.selectedDates;
-    return {
-      checkin: start || null,
-      checkout: end || null,
-      adults: getCount("adults"),
-      children: getCount("children"),
-    };
-  }
 
   setCount("adults", getCount("adults"));
   setCount("children", getCount("children"));
@@ -98,20 +93,16 @@ function initBar(form) {
   form.addEventListener("submit", (e) => {
     e.preventDefault();
     toggleDropdown(false);
-    window.location.href = `${BOOKING_URL}?${toParams(getState())}#booking-form`;
+    const p = new URLSearchParams();
+    const [start, end] = picker.selectedDates;
+    if (start && end) {
+      p.set("checkin", toISO(start));
+      p.set("checkout", toISO(end));
+    }
+    p.set("adults", getCount("adults"));
+    p.set("children", getCount("children"));
+    window.location.href = `${BOOKING_URL}?${p}#booking-form`;
   });
-
-}
-
-function toParams({ checkin, checkout, adults, children }) {
-  const p = new URLSearchParams();
-  if (checkin && checkout) {
-    p.set("checkin", toISO(checkin));
-    p.set("checkout", toISO(checkout));
-  }
-  p.set("adults", adults);
-  p.set("children", children);
-  return p.toString();
 }
 
 /* ---------- Boot ---------- */

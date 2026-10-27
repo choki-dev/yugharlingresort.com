@@ -28,9 +28,11 @@
   function goTo(index) {
     slides[current].classList.remove("is-active");
     dots[current].classList.remove("is-active");
+    dots[current].removeAttribute("aria-current");
     current = (index + slides.length) % slides.length;
     slides[current].classList.add("is-active");
     dots[current].classList.add("is-active");
+    dots[current].setAttribute("aria-current", "true");
     restartTimer();
   }
 
@@ -134,32 +136,51 @@
   const lightbox = $("#lightbox");
   const lbImg = $("img", lightbox);
   const galleryLinks = $$(".js-lightbox a");
+  const lbButtons = $$("button", lightbox);
   let lbIndex = 0;
+  let lbReturnFocus = null;
 
-  function openLightbox(i) {
+  function showImage(i) {
     lbIndex = (i + galleryLinks.length) % galleryLinks.length;
     lbImg.src = galleryLinks[lbIndex].href;
     lbImg.alt = $("img", galleryLinks[lbIndex]).alt;
+  }
+  function openLightbox(i) {
+    showImage(i);
+    lbReturnFocus = document.activeElement;
     lightbox.classList.add("is-open");
+    $(".lightbox__close").focus();
+  }
+  function closeLightbox() {
+    if (!lightbox.classList.contains("is-open")) return;
+    lightbox.classList.remove("is-open");
+    lbReturnFocus?.focus();
   }
   galleryLinks.forEach((a, i) => a.addEventListener("click", (e) => {
     e.preventDefault();
     openLightbox(i);
   }));
-  $(".lightbox__close").addEventListener("click", () => lightbox.classList.remove("is-open"));
-  $(".lightbox__prev").addEventListener("click", () => openLightbox(lbIndex - 1));
-  $(".lightbox__next").addEventListener("click", () => openLightbox(lbIndex + 1));
-  lightbox.addEventListener("click", (e) => { if (e.target === lightbox) lightbox.classList.remove("is-open"); });
+  $(".lightbox__close").addEventListener("click", closeLightbox);
+  $(".lightbox__prev").addEventListener("click", () => showImage(lbIndex - 1));
+  $(".lightbox__next").addEventListener("click", () => showImage(lbIndex + 1));
+  lightbox.addEventListener("click", (e) => { if (e.target === lightbox) closeLightbox(); });
 
-  /* ---------- Keyboard: Esc closes overlays, arrows move lightbox ---------- */
+  /* ---------- Keyboard: Esc closes overlays, arrows move lightbox, Tab stays inside it ---------- */
   document.addEventListener("keydown", (e) => {
     if (e.key === "Escape") {
       closePanel();
-      lightbox.classList.remove("is-open");
+      closeLightbox();
     }
     if (lightbox.classList.contains("is-open")) {
-      if (e.key === "ArrowRight") openLightbox(lbIndex + 1);
-      if (e.key === "ArrowLeft") openLightbox(lbIndex - 1);
+      if (e.key === "ArrowRight") showImage(lbIndex + 1);
+      if (e.key === "ArrowLeft") showImage(lbIndex - 1);
+      if (e.key === "Tab") {
+        const first = lbButtons[0];
+        const last = lbButtons[lbButtons.length - 1];
+        if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+        else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+        else if (!lightbox.contains(document.activeElement)) { e.preventDefault(); first.focus(); }
+      }
     }
   });
 

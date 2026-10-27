@@ -1,0 +1,41 @@
+---
+// Served by Cloudflare for unknown URLs ("not_found_handling": "404-page" in wrangler.jsonc)
+import Layout from "../layouts/Layout.astro";
+import Preloader from "../components/Preloader.astro";
+import Header from "../components/Header.astro";
+import Overlays from "../components/Overlays.astro";
+import Footer from "../components/Footer.astro";
+import PageHero from "../components/PageHero.astro";
+import SectionTitle from "../components/SectionTitle.astro";
+import { site, url, img } from "../data/site";
+---
+
+<Layout title={`Page Not Found | ${site.name}`} description="The page you were looking for could not be found.">
+  <Preloader />
+  <Header />
+  <Overlays />
+
+  <main>
+    <PageHero
+      image={img("resort-view.jpg")}
+      script="page not"
+      title="Found"
+      crumbs={[{ label: "404" }]}
+      cta={{ href: "#not-found", label: "Continue" }}
+    />
+
+    <section class="section section--mist" id="not-found">
+      <div class="container">
+        <SectionTitle label="404" thin="Lost in the valley" title="This page has wandered off" center class="reveal">
+          <p>The page you were looking for may have moved or no longer exists.</p>
+        </SectionTitle>
+        <div class="contact-actions" style="justify-content:center">
+          <a href={url("/")} class="btn btn--teal">Back to Home</a>
+          <a href={url("/accommodation/")} class="btn btn--outlined">View Rooms</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+</Layout>

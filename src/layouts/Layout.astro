@@ -1,12 +1,17 @@
 ---
 import "../styles/global.css";
 import IconSprite from "../components/IconSprite.astro";
-import { site, url } from "../data/site";
+import { site, url, img } from "../data/site";
 
 interface Props {
   title?: string;
+  description?: string;
+  /** Social preview image (root-relative, base included) */
+  image?: string;
 }
-const { title = `${site.name} | Bumthang, Bhutan` } = Astro.props;
+const { title = `${site.name} | Bumthang, Bhutan`, description = site.description, image = img("resort-view.jpg") } = Astro.props;
+const canonical = new URL(Astro.url.pathname, Astro.site);
+const ogImage = new URL(image, Astro.site);
 ---
 
 <!doctype html>
@@ -15,12 +20,23 @@ const { title = `${site.name} | Bumthang, Bhutan` } = Astro.props;
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{title}</title>
-    <meta name="description" content={site.description} />
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <link rel="sitemap" href={url("/sitemap-index.xml")} />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={site.name} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+    <meta name="twitter:card" content="summary_large_image" />
     <meta name="theme-color" content="#1b2240" />
     <link rel="icon" type="image/png" href={url("/favicon.png")} />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Upright:wght@300;400;500;600;700&family=Inconsolata:wght@300;400;500;600&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet" />
+    <!-- Without JavaScript: no preloader, no scroll lock, no hidden reveal blocks -->
+    <noscript><style>.preloader { display: none; } body.is-locked { overflow: auto; } .reveal { opacity: 1; transform: none; }</style></noscript>
   </head>
   <body class="is-locked">
     <IconSprite />

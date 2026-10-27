@@ -1,6 +1,6 @@
 // Content for the internal pages, word for word from the resort's "Revised Website Content" document.
 
-import { url } from "./site";
+import { url, thumb } from "./site";
 
 const photo = (file: string) => url(`/images/resort/${file}`);
 const img = (file: string) => url(`/images/yugharling/${file}`);
@@ -54,7 +54,7 @@ const groups = [
 let n = 0;
 export const facilityGroups = groups.map((g) => ({
   ...g,
-  items: g.items.map((f) => ({ ...f, id: f.name.toLowerCase(), num: String(++n).padStart(2, "0"), images: f.images.map(img) })),
+  items: g.items.map((f) => ({ ...f, id: f.name.toLowerCase(), num: String(++n).padStart(2, "0"), images: f.images.map((file) => ({ full: img(file), thumb: thumb(file) })) })),
 }));
 
 // 9. Facilities & Amenities — the remaining key facilities

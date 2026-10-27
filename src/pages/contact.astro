@@ -13,15 +13,27 @@ import { contact } from "../data/pages";
 
 const cards = [
   { icon: "pin", label: "Address", lines: [{ text: site.address, href: contact.mapLink, external: true }] },
-  { icon: "phone", label: "Telephone", lines: [site.phone, site.phone2, site.phone3].map((n) => ({ text: n, href: telHref(n) })) },
-  { icon: "whatsapp", label: "Mobile / WhatsApp", lines: [{ text: site.mobile, href: whatsappLink(["I have a question about Yugharling Resort."]), external: true }] },
+  {
+    icon: "phone", label: "Telephone",
+    lines: [
+      ...[site.phone, site.phone2, site.phone3].map((n) => ({ text: `Front desk: ${n}`, href: telHref(n) })),
+      { text: `Reservations: ${site.reservationPhone}`, href: telHref(site.reservationPhone) },
+    ],
+  },
+  {
+    icon: "whatsapp", label: "Mobile / WhatsApp",
+    lines: [
+      { text: `Front desk: ${site.mobile}`, href: whatsappLink(["I have a question about Yugharling Resort."]), external: true },
+      { text: `Reservations: ${site.reservationMobile}`, href: whatsappLink(["I would like to make a reservation."], site.reservationWhatsapp), external: true },
+    ],
+  },
   { icon: "mail", label: "Email", lines: [site.email, site.email2].map((e) => ({ text: e, href: `mailto:${e}` })) },
   { icon: "view", label: "Website", lines: [{ text: site.website, href: url("/") }] },
 ];
 const delays = ["", "reveal-d1", "reveal-d2", "reveal-d3", ""];
 ---
 
-<Layout title={`Contact Us | ${site.name}`}>
+<Layout title={`Contact Us | ${site.name}`} description="Contact Yugharling Resort & Wellness Spa in Chamkhar, Bumthang: phone, WhatsApp, email and directions for reservations, group bookings and events.">
   <Preloader />
   <Header />
   <Overlays />

@@ -2,7 +2,7 @@
 import Icon from "./Icon.astro";
 import Logo from "./Logo.astro";
 import Socials from "./Socials.astro";
-import { site, telHref, url } from "../data/site";
+import { site, telHref, whatsappLink, url } from "../data/site";
 
 const links = [
   { href: url("/about/"), label: "About Us" },
@@ -19,8 +19,16 @@ const year = new Date().getFullYear();
 <footer class="site-footer" id="contact">
   <div class="footer-top">
     <div class="container footer-grid">
-      <div>
-        <Logo variant="light" />
+      <div class="footer-brand">
+        <div class="footer-brand__head">
+          <Logo />
+          <div class="footer-brand__name">
+            <strong>Yugharling</strong>
+            <span>Resort &amp; Wellness Spa</span>
+          </div>
+        </div>
+        <p class="footer-brand__tagline">{site.tagline}</p>
+        <a href={url("/booking/")} class="btn btn--teal">Book Your Stay</a>
         <Socials />
       </div>
       <div>
@@ -32,8 +40,10 @@ const year = new Date().getFullYear();
       <div>
         <h5>Get In Touch</h5>
         <ul class="footer-contact">
-          <li><Icon name="phone" /><a href={site.phoneHref}>{site.phone}</a></li>
-          <li><Icon name="whatsapp" /><a href={telHref(site.mobile)}>{site.mobile}</a></li>
+          <li><Icon name="phone" /><a href={site.phoneHref}>Front desk: {site.phone}</a></li>
+          <li><Icon name="whatsapp" /><a href={whatsappLink(["I have a question about Yugharling Resort."])} target="_blank" rel="noopener">Front desk: {site.mobile}</a></li>
+          <li><Icon name="phone" /><a href={telHref(site.reservationPhone)}>Reservations: {site.reservationPhone}</a></li>
+          <li><Icon name="whatsapp" /><a href={whatsappLink(["I would like to make a reservation."], site.reservationWhatsapp)} target="_blank" rel="noopener">Reservations: {site.reservationMobile}</a></li>
           <li><Icon name="mail" /><a href={`mailto:${site.email}`}>{site.email}</a></li>
           <li><Icon name="pin" /><span>{site.address}</span></li>
         </ul>

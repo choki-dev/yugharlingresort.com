@@ -21,9 +21,9 @@ import { heroSlides, url } from "../data/site";
     </div>
   ))}
 
-  <div class="hero__pagination" role="tablist" aria-label="Slides">
+  <div class="hero__pagination" role="group" aria-label="Slides">
     {heroSlides.map((_, i) => (
-      <button class:list={["hero__dot", { "is-active": i === 0 }]} aria-label={`Slide ${i + 1}`}>{String(i + 1).padStart(2, "0")}</button>
+      <button class:list={["hero__dot", { "is-active": i === 0 }]} aria-label={`Slide ${i + 1}`} aria-current={i === 0 ? "true" : undefined}>{String(i + 1).padStart(2, "0")}</button>
     ))}
   </div>
   <div class="hero__arrows">

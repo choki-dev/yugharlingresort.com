@@ -17,11 +17,11 @@ export function getStaticPaths() {
 
 const { room: r } = Astro.props;
 const others = rooms.filter((o) => o.slug !== r.slug);
-const reserve = whatsappLink(["I would like to make a reservation:", `• Room type: ${r.title}`, `• Rate: from ${r.price} per night`, "", "Please let me know the availability."]);
+const reserve = whatsappLink(["I would like to make a reservation:", `• Room type: ${r.title}`, `• Rate: from ${r.price} per night`, "", "Please let me know the availability."], site.reservationWhatsapp);
 const icons: Record<string, string> = { Bed: "bed-s", Inventory: "door", Location: "pin", Balcony: "balcony", View: "view", "Valley view": "view" };
 ---
 
-<Layout title={`${r.title} | ${site.name}`}>
+<Layout title={`${r.title} | ${site.name}`} description={`${r.text} Rates from ${r.price} per night.`} image={r.image}>
   <Preloader />
   <Header />
   <Overlays />
@@ -77,7 +77,7 @@ const icons: Record<string, string> = { Bed: "bed-s", Inventory: "door", Locatio
       <div class="container">
         <SectionTitle label="Gallery" thin="Take a look inside" title="Room photos" center class="reveal" />
         <div class="room-gallery js-lightbox reveal">
-          {r.gallery.map((src, i) => <a href={src}><img src={src} alt={`${r.title} — photo ${i + 1}`} loading="lazy" /></a>)}
+          {r.gallery.map((g, i) => <a href={g.full}><img src={g.thumb} alt={`${r.title} — photo ${i + 1}`} loading="lazy" /></a>)}
         </div>
       </div>
     </section>

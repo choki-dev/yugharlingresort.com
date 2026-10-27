@@ -8,6 +8,9 @@ export const url = (path: string) => `${import.meta.env.BASE_URL.replace(/\/$/, 
 const photo = (file: string) => url(`/images/resort/${file}`);
 // The resort's own photography
 export const img = (file: string) => url(`/images/yugharling/${file}`);
+// 800px preview of the same photo, for gallery grids (the lightbox opens the full image).
+// Regenerate the thumbs folder whenever a photo is added or replaced.
+export const thumb = (file: string) => url(`/images/yugharling/thumbs/${file}`);
 
 export const site = {
   name: "Yugharling Resort & Wellness Spa",
@@ -18,13 +21,18 @@ export const site = {
   phoneHref: "tel:+9753631602",
   phone2: "03 631484",
   phone3: "03 631567",
+  // Front desk mobile / WhatsApp: general enquiries
   mobile: "+975 16169333",
+  // Reservations: mobile / WhatsApp and fixed line
+  reservationMobile: "+975 17851167",
+  reservationPhone: "02 323417",
   email: "reservations.yugharling@gmail.com",
   email2: "trepatsang@gmail.com",
   website: "yugharlingresort.com",
-  // WhatsApp number that receives Reserve Now requests: digits only, with
-  // country code (e.g. "97517123456"). If empty, WhatsApp opens and the visitor picks the chat.
+  // WhatsApp numbers: digits only, with country code (e.g. "97517123456").
+  // reservationWhatsapp receives the booking form and Reserve Now requests; whatsapp (front desk) the general chats.
   whatsapp: "97516169333",
+  reservationWhatsapp: "97517851167",
   address: "P.O. Box 101, Chamkhar, Bumthang, Bhutan",
 };
 
@@ -47,11 +55,12 @@ export const navRight = [
   { href: url("/contact/"), label: "Contact" },
 ];
 
+// Paste each profile URL into href; until then the icon shows but is not a link.
 export const socials = [
-  { icon: "fb", label: "Facebook" },
-  { icon: "ig", label: "Instagram" },
-  { icon: "x", label: "X" },
-  { icon: "yt", label: "YouTube" },
+  { icon: "fb", label: "Facebook", href: "" },
+  { icon: "ig", label: "Instagram", href: "" },
+  { icon: "x", label: "X", href: "" },
+  { icon: "yt", label: "YouTube", href: "" },
 ];
 
 /* ---------- 1. Home page ---------- */
@@ -126,7 +135,7 @@ export const gallery = [
   { file: "bonfire.jpg", alt: "Evening bonfire on the terrace" },
   { file: "bar-pool.jpg", alt: "Bar with pool table" },
   { file: "yoga-room.jpg", alt: "Choesham altar room" },
-].map((g) => ({ full: img(g.file), thumb: img(g.file), alt: g.alt }));
+].map((g) => ({ full: img(g.file), thumb: thumb(g.file), alt: g.alt }));
 
 /* ---------- 2. About Us ---------- */
 export const aboutPage = [
@@ -157,9 +166,9 @@ export const aboutPage = [
 /* ---------- 3. Rooms & Suites ---------- */
 export const formatNu = (n: number) => `Nu. ${n.toLocaleString("en-US")}`;
 
-/** wa.me link to the resort with a pre-filled message */
-export const whatsappLink = (lines: string[]) =>
-  `https://wa.me/${site.whatsapp}?text=${encodeURIComponent(["Hello Yugharling Resort,", "", ...lines, "", "Thank you!"].join("\n"))}`;
+/** wa.me link to the resort with a pre-filled message (front desk unless another number is given) */
+export const whatsappLink = (lines: string[], number = site.whatsapp) =>
+  `https://wa.me/${number}?text=${encodeURIComponent(["Hello Yugharling Resort,", "", ...lines, "", "Thank you!"].join("\n"))}`;
 
 // details = the Bed / Inventory / Location / Balcony / View lines from the content document.
 // rate ("Rates From" per night) is from yugharlingresort.com; beds/occupancy/count feed the room cards and booking form.
@@ -214,7 +223,7 @@ export const rooms = roomList.map((r) => ({
   text: r.intro.split(/(?<=\.)\s/)[0],
   label: r.details.filter(([k]) => k === "Location" || k === "View").map(([, v]) => v).join(" · "),
   meta: [r.beds, `${r.occupancy} guests`, r.valleyView ? "Valley view" : "Main building"],
-  gallery: r.gallery.map(img),
+  gallery: r.gallery.map((f) => ({ full: img(f), thumb: thumb(f) })),
 }));
 
 export const accommodation = {

@@ -10,10 +10,10 @@ import Footer from "../components/Footer.astro";
 import PageHero from "../components/PageHero.astro";
 import SectionTitle from "../components/SectionTitle.astro";
 import Icon from "../components/Icon.astro";
-import { rooms, site, url } from "../data/site";
+import { rooms, site, telHref, url } from "../data/site";
 ---
 
-<Layout title={`Booking | ${site.name}`}>
+<Layout title={`Booking | ${site.name}`} description="Send a booking request to Yugharling Resort & Wellness Spa in Bumthang, Bhutan. Choose your dates, room and guests and send it to our reservations team on WhatsApp.">
   <Preloader />
   <Header />
   <Overlays />
@@ -29,7 +29,7 @@ import { rooms, site, url } from "../data/site";
 
     <section class="section section--mist" id="booking-form">
       <div class="container booking-page">
-        <form class="booking-request reveal" id="bookingRequest" novalidate data-whatsapp={site.whatsapp}>
+        <form class="booking-request reveal" id="bookingRequest" novalidate data-whatsapp={site.reservationWhatsapp}>
           <SectionTitle label="Booking" thin="Reservation request" title="Book Your Stay" />
 
           <fieldset>
@@ -115,8 +115,9 @@ import { rooms, site, url } from "../data/site";
             <span class="label">Reservations</span>
             <h4>Prefer to call?</h4>
             <ul class="footer-contact">
-              <li><Icon name="whatsapp" /><span>Mobile / WhatsApp<br /><a href={`tel:${site.mobile.replace(/[^+\d]/g, "")}`}>{site.mobile}</a></span></li>
-              <li><Icon name="phone" /><span>Telephone<br /><a href={site.phoneHref}>{site.phone}</a></span></li>
+              <li><Icon name="whatsapp" /><span>Reservations mobile / WhatsApp<br /><a href={telHref(site.reservationMobile)}>{site.reservationMobile}</a></span></li>
+              <li><Icon name="phone" /><span>Reservations telephone<br /><a href={telHref(site.reservationPhone)}>{site.reservationPhone}</a></span></li>
+              <li><Icon name="phone" /><span>Front desk<br /><a href={site.phoneHref}>{site.phone}</a></span></li>
               <li><Icon name="mail" /><span><a href={`mailto:${site.email}`}>{site.email}</a></span></li>
             </ul>
           </div>

@@ -5,13 +5,15 @@
 // (see scripts/booking.js and scripts/booking-form.js).
 import "flatpickr/dist/flatpickr.min.css";
 import Icon from "./Icon.astro";
-import { booking, site, url } from "../data/site";
+import { booking, url } from "../data/site";
 
 interface Props {
   /** "hero" overlaps the bottom of the hero slider; "static" sits in normal flow */
   variant?: "hero" | "static";
 }
 const { variant = "static" } = Astro.props;
+// Unique per instance, in case a page has more than one bar
+const dropdownId = `guests-${Math.random().toString(36).slice(2, 8)}`;
 ---
 
 <div class:list={["booking-bar-wrap", `booking-bar-wrap--${variant}`]}>
@@ -22,7 +24,6 @@ const { variant = "static" } = Astro.props;
     novalidate
     data-max-adults={booking.maxAdults}
     data-max-children={booking.maxChildren}
-    data-whatsapp={site.whatsapp}
   >
     <label class="bb-group bb-group--dates">
       <Icon name="calendar" class="bb-icon" />
@@ -34,13 +35,15 @@ const { variant = "static" } = Astro.props;
       <input type="hidden" name="checkout" class="bb-checkout" />
     </label>
 
-    <div class="bb-group bb-group--guests" tabindex="0" role="button" aria-haspopup="true" aria-expanded="false">
-      <Icon name="user" class="bb-icon" />
-      <span class="bb-field">
-        <span class="bb-label">Guests</span>
-        <span class="bb-guests-total">2 Adults, 0 Children</span>
-      </span>
-      <div class="guests-dropdown" role="dialog" aria-label="Choose guests">
+    <div class="bb-group bb-group--guests">
+      <button type="button" class="bb-toggle" aria-expanded="false" aria-controls={dropdownId}>
+        <Icon name="user" class="bb-icon" />
+        <span class="bb-field">
+          <span class="bb-label">Guests</span>
+          <span class="bb-guests-total">2 Adults, 0 Children</span>
+        </span>
+      </button>
+      <div class="guests-dropdown" id={dropdownId} role="group" aria-label="Choose guests">
         <div class="guest-row">
           <div class="guest-label"><strong>Adult</strong><span>Ages 13 or above</span></div>
           <div class="guest-controls">

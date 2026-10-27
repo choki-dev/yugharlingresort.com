@@ -1,14 +1,14 @@
 ---
 // Zig-zag room card (same look as the facility cards) with View Room + Reserve Now
 import Icon from "./Icon.astro";
-import { whatsappLink, type rooms } from "../data/site";
+import { site, whatsappLink, type rooms } from "../data/site";
 
 interface Props {
   room: (typeof rooms)[number];
   index: number;
 }
 const { room: r, index } = Astro.props;
-const reserve = whatsappLink(["I would like to make a reservation:", `• Room type: ${r.title}`, `• Rate: from ${r.price} per night`, "", "Please let me know the availability."]);
+const reserve = whatsappLink(["I would like to make a reservation:", `• Room type: ${r.title}`, `• Rate: from ${r.price} per night`, "", "Please let me know the availability."], site.reservationWhatsapp);
 ---
 
 <article class="avail-card reveal">
