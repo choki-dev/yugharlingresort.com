@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://choki-dev.github.io/yugharlingresort.com/sitemap-index.xml
