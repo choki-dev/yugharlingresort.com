@@ -7,7 +7,7 @@ import Overlays from "../components/Overlays.astro";
 import Footer from "../components/Footer.astro";
 import PageHero from "../components/PageHero.astro";
 import SectionTitle from "../components/SectionTitle.astro";
-import { site, img, aboutPage, url } from "../data/site";
+import { site, img, aboutPage, url, srcset } from "../data/site";
 
 const labels = ["About Us", "Our heritage", "Our hospitality"];
 ---
@@ -30,8 +30,8 @@ const labels = ["About Us", "Our heritage", "Our hospitality"];
       <section class:list={["section", { "section--mist": i % 2 === 1 }]} id={i === 0 ? "about" : undefined}>
         <div class="container about__grid">
           <div class="about__media reveal">
-            <img class="img-main" src={s.image} alt={s.title} loading="lazy" />
-            <img class="img-small" src={s.imageSmall} alt="" loading="lazy" />
+            <img class="img-main" src={s.image} srcset={srcset(s.image)} sizes="(max-width: 1100px) 100vw, 480px" alt={s.title} loading="lazy" />
+            <img class="img-small" src={s.imageSmall} srcset={srcset(s.imageSmall)} sizes="(max-width: 1100px) 52vw, 250px" alt="" loading="lazy" />
           </div>
           <div class="about__content">
             <SectionTitle label={labels[i]} thin={site.name} title={s.title} class="reveal">

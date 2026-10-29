@@ -12,9 +12,8 @@
     document.body.classList.remove("is-locked");
     if (slides.length) startHero();
   }
-  window.addEventListener("load", () => setTimeout(hidePreloader, 200));
-  // Don't hold the page behind the preloader on slow connections: images keep loading underneath
-  setTimeout(() => { if (!$("#preloader").classList.contains("is-hidden")) hidePreloader(); }, 1500);
+  // Lift it as soon as the page is ready rather than waiting for every image: photos keep loading underneath
+  setTimeout(hidePreloader, 150);
 
   /* ---------- Hero slider ---------- */
   const slides = $$(".hero__slide");

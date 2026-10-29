@@ -3,7 +3,7 @@
 // On the availability page (book) it also gets Book Now, and the data-* attributes let
 // scripts/availability.js show the stay status and total and rewrite both buttons.
 import Icon from "./Icon.astro";
-import { site, whatsappLink, url, type rooms } from "../data/site";
+import { site, whatsappLink, url, srcset, type rooms } from "../data/site";
 
 interface Props {
   room: (typeof rooms)[number];
@@ -17,7 +17,7 @@ const reserve = whatsappLink(["I would like to make a reservation:", `• Room t
 
 <article class="avail-card reveal" data-slug={r.slug} data-room={r.title} data-rate={r.rate} data-occupancy={r.occupancy}>
   <a href={r.href} class="avail-card__media" aria-label={`View ${r.title}`}>
-    <img src={r.image} alt={r.title} loading="lazy" />
+    <img src={r.image} srcset={srcset(r.image)} sizes="(max-width: 1100px) 100vw, 640px" alt={r.title} loading="lazy" />
     {r.tag && <span class="tour-card__tag">{r.tag}</span>}
     <div class="tour-card__price"><strong>{r.price}</strong><span>/ night</span></div>
   </a>

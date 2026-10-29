@@ -1,5 +1,5 @@
 ---
-import { explore, url } from "../data/site";
+import { explore, url, srcset } from "../data/site";
 
 const delays = ["reveal-d1", "reveal-d2", "", "reveal-d1", "reveal-d2"];
 ---
@@ -17,7 +17,7 @@ const delays = ["reveal-d1", "reveal-d2", "", "reveal-d1", "reveal-d2"];
       </div>
       {explore.tiles.map((e, i) => (
         <a href={url("/things-to-do/")} class:list={["dest reveal", e.cls, delays[i]]}>
-          <img src={e.image} alt={e.alt} loading="lazy" />
+          <img src={e.image} srcset={srcset(e.image)} sizes="(max-width: 680px) 100vw, (max-width: 1100px) 50vw, 600px" alt={e.alt} loading="lazy" />
           <div class="dest__text"><span class="label">{e.label}</span><h4>{e.title}</h4></div>
         </a>
       ))}

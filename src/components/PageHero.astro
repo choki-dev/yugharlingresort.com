@@ -14,6 +14,7 @@ interface Props {
 const { image, script, title, crumbs = [{ label: title }], cta } = Astro.props;
 ---
 
+<link rel="preload" as="image" href={image} fetchpriority="high" />
 <section class="page-hero">
   <div class="page-hero__bg" style={`background-image:url('${image}')`}></div>
   <div class="page-hero__frame" aria-hidden="true"></div>

@@ -11,7 +11,9 @@ interface Props {
 }
 const { title = `${site.name} | Bumthang, Bhutan`, description = site.description, image = img("resort-view.jpg") } = Astro.props;
 const canonical = new URL(Astro.url.pathname, Astro.site);
-const ogImage = new URL(image, Astro.site);
+const fonts = "https://fonts.googleapis.com/css2?family=Cormorant+Upright:wght@400;500;600;700&family=Inconsolata:wght@300;400;500&family=Roboto:wght@300;400;500&display=swap";
+// Social sites get the original JPEG; pages show the lighter .webp copy
+const ogImage = new URL(image.replace(/\.webp$/, ".jpg"), Astro.site);
 
 // Hotel details for search engines, on the home page only
 const isHome = Astro.url.pathname === url("/") || Astro.url.pathname === `${url("/")}/`;
@@ -58,7 +60,10 @@ const hotelSchema = {
     <link rel="icon" type="image/png" href={url("/favicon.png")} />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Upright:wght@300;400;500;600;700&family=Inconsolata:wght@300;400;500;600&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet" />
+    <!-- Fonts load without blocking the first paint (fallback fonts show until they arrive) -->
+    <link rel="preload" as="style" href={fonts} />
+    <link rel="stylesheet" href={fonts} media="print" onload="this.media='all'" />
+    <noscript><link rel="stylesheet" href={fonts} /></noscript>
     <!-- Without JavaScript: no preloader, no scroll lock, no hidden reveal blocks -->
     <noscript><style>.preloader { display: none; } body.is-locked { overflow: auto; } .reveal { opacity: 1; transform: none; }</style></noscript>
   </head>

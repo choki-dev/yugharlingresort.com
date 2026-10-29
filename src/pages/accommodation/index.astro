@@ -11,10 +11,10 @@ import SectionTitle from "../../components/SectionTitle.astro";
 import RoomRow from "../../components/RoomRow.astro";
 import Gallery from "../../components/Gallery.astro";
 import Icon from "../../components/Icon.astro";
-import { rooms, accommodation, site, img, url } from "../../data/site";
+import { rooms, accommodation, site, img, thumb, url, srcset } from "../../data/site";
 
 const strip = ["balcony-2.jpg", "junior-suite-2.jpg", "suite-sitting.jpg", "family-room-2.jpg", "deluxe-double-1.jpg", "suite-corridor.jpg"]
-  .map((f) => ({ full: img(f), thumb: img(f), alt: "Yugharling Resort room" }));
+  .map((f) => ({ full: img(f), thumb: thumb(f), alt: "Yugharling Resort room" }));
 ---
 
 <Layout title={`Rooms & Suites | ${site.name}`} description="Standard rooms, valley-view deluxe cottage rooms, family rooms and suites with handcrafted Bhutanese interiors in Bumthang. See rates and book your stay.">
@@ -36,8 +36,8 @@ const strip = ["balcony-2.jpg", "junior-suite-2.jpg", "suite-sitting.jpg", "fami
     <section class="section" id="about">
       <div class="container about__grid">
         <div class="about__media reveal">
-          <img class="img-main" src={img("deluxe-double.jpg")} alt="Standard Deluxe room interior" loading="lazy" />
-          <img class="img-small" src={img("junior-suite-1.jpg")} alt="Junior Suite interior" loading="lazy" />
+          <img class="img-main" src={img("deluxe-double.jpg")} srcset={srcset(img("deluxe-double.jpg"))} sizes="(max-width: 1100px) 100vw, 480px" alt="Standard Deluxe room interior" loading="lazy" />
+          <img class="img-small" src={img("junior-suite-1.jpg")} srcset={srcset(img("junior-suite-1.jpg"))} sizes="(max-width: 1100px) 52vw, 250px" alt="Junior Suite interior" loading="lazy" />
           <div class="about__stamp"><div><strong data-count={rooms.length}>0</strong><span>Room<br />types</span></div></div>
         </div>
         <div class="about__content">

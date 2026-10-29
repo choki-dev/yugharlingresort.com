@@ -1,9 +1,6 @@
 // Content for the internal pages, word for word from the resort's "Revised Website Content" document.
 
-import { url, thumb } from "./site";
-
-const photo = (file: string) => url(`/images/resort/${file}`);
-const img = (file: string) => url(`/images/yugharling/${file}`);
+import { img, thumb, photo } from "./site";
 
 /* ---------- Facilities: 4. Dining, Bar & Lounge · 5. Spa & Wellness · 6. Meetings & Events ---------- */
 const groups = [

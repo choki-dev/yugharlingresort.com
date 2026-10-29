@@ -8,7 +8,7 @@ import Footer from "../components/Footer.astro";
 import PageHero from "../components/PageHero.astro";
 import SectionTitle from "../components/SectionTitle.astro";
 import Icon from "../components/Icon.astro";
-import { site, whatsappLink, telHref, url } from "../data/site";
+import { site, whatsappLink, telHref, url, img } from "../data/site";
 import { contact } from "../data/pages";
 
 const cards = [
@@ -39,7 +39,7 @@ const delays = ["", "reveal-d1", "reveal-d2", "reveal-d3"];
 
   <main>
     <PageHero
-      image={url("/images/yugharling/lobby-cafe-balcony.jpg")}
+      image={img("lobby-cafe-balcony.jpg")}
       script="get in"
       title="Touch"
       crumbs={[{ label: "Contact Us" }]}

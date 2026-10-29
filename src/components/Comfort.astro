@@ -1,14 +1,14 @@
 ---
 // Home "Comfort by Nature": a short reference that links to the Sustainability page
 import SectionTitle from "./SectionTitle.astro";
-import { comfort, url } from "../data/site";
+import { comfort, url, srcset } from "../data/site";
 ---
 
 <section class="section" id="comfort">
   <div class="container about__grid">
     <div class="about__media reveal">
-      <img class="img-main" src={comfort.image} alt="Yugharling Resort in the Bumthang Valley" loading="lazy" />
-      <img class="img-small" src={comfort.imageSmall} alt="Resort garden and terrace" loading="lazy" />
+      <img class="img-main" src={comfort.image} srcset={srcset(comfort.image)} sizes="(max-width: 1100px) 100vw, 480px" alt="Yugharling Resort in the Bumthang Valley" loading="lazy" />
+      <img class="img-small" src={comfort.imageSmall} srcset={srcset(comfort.imageSmall)} sizes="(max-width: 1100px) 52vw, 250px" alt="Resort garden and terrace" loading="lazy" />
     </div>
     <div class="about__content">
       <SectionTitle label="Sustainability" thin="Bhutanese tradition, modern efficiency" title="Comfort by Nature" class="reveal">

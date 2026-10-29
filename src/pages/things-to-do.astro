@@ -8,10 +8,9 @@ import Overlays from "../components/Overlays.astro";
 import Footer from "../components/Footer.astro";
 import PageHero from "../components/PageHero.astro";
 import SectionTitle from "../components/SectionTitle.astro";
-import { site, whatsappLink, url } from "../data/site";
+import { site, whatsappLink, url, photo, srcset } from "../data/site";
 import { experience } from "../data/pages";
 
-const photo = (f: string) => url(`/images/resort/${f}`);
 const delays = ["", "reveal-d1", "reveal-d2"];
 ---
 
@@ -37,7 +36,7 @@ const delays = ["", "reveal-d1", "reveal-d2"];
         <div class="cards-3">
           {experience.categories.map((c, i) => (
             <article class:list={["exp-card reveal", delays[i % 3]]}>
-              <div class="exp-card__img"><img src={c.image} alt={c.alt} loading="lazy" /></div>
+              <div class="exp-card__img"><img src={c.image} srcset={srcset(c.image)} sizes="(max-width: 680px) min(520px, 100vw), (max-width: 860px) 50vw, 400px" alt={c.alt} loading="lazy" /></div>
               <div class="exp-card__text">
                 <h4>{c.text}</h4>
               </div>

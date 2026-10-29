@@ -3,6 +3,7 @@ import Icon from "./Icon.astro";
 import { heroSlides, url } from "../data/site";
 ---
 
+<link rel="preload" as="image" href={heroSlides[0].image} fetchpriority="high" />
 <section class="hero" id="home">
   <div class="hero__side-label">Yugharling · Bumthang · Bhutan</div>
 

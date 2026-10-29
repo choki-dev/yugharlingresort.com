@@ -2,15 +2,30 @@
 // Text and contact details follow the resort's "Revised Website Content" document word for word;
 // room rates and the Bumthang photos are from https://www.yugharlingresort.com/
 
+import widths from "./image-widths.json";
+
 /** Prefix a root-relative path with the site base (empty when served from the domain root) */
 export const url = (path: string) => `${import.meta.env.BASE_URL.replace(/\/$/, "")}${path}`;
 
-const photo = (file: string) => url(`/images/resort/${file}`);
+// Photos are named by their original .jpg but served as the compressed .webp copy beside it.
+// After adding or replacing a photo (and its thumb), run `npm run images` to regenerate them.
+const webp = (file: string) => file.replace(/\.jpe?g$/i, ".webp");
+export const photo = (file: string) => url(`/images/resort/${webp(file)}`);
 // The resort's own photography
-export const img = (file: string) => url(`/images/yugharling/${file}`);
-// 800px preview of the same photo, for gallery grids (the lightbox opens the full image).
-// Regenerate the thumbs folder whenever a photo is added or replaced.
-export const thumb = (file: string) => url(`/images/yugharling/thumbs/${file}`);
+export const img = (file: string) => url(`/images/yugharling/${webp(file)}`);
+// 640px preview of the same photo, for gallery grids (the lightbox opens the full image).
+export const thumb = (file: string) => url(`/images/yugharling/thumbs/${webp(file)}`);
+
+// The smaller copies `npm run images` writes beside each photo, so the browser picks the size it needs
+const VARIANTS = [480, 960];
+/** srcset for a photo from img() or photo(): its 480/ and 960/ copies plus the full image */
+export const srcset = (src: string) => {
+  const full = (widths as Record<string, number>)[src.split("/images/")[1]];
+  if (!full) return undefined;
+  const cut = src.lastIndexOf("/");
+  const copies = VARIANTS.filter((w) => w < full).map((w) => `${src.slice(0, cut)}/${w}${src.slice(cut)} ${w}w`);
+  return [...copies, `${src} ${full}w`].join(", ");
+};
 
 export const site = {
   name: "Yugharling Resort & Wellness Spa",
