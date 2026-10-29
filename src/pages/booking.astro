@@ -3,7 +3,6 @@
 // The site has no server, so the request is sent as a pre-filled WhatsApp message.
 import "flatpickr/dist/flatpickr.min.css";
 import Layout from "../layouts/Layout.astro";
-import Preloader from "../components/Preloader.astro";
 import Header from "../components/Header.astro";
 import Overlays from "../components/Overlays.astro";
 import Footer from "../components/Footer.astro";
@@ -14,7 +13,6 @@ import { rooms, site, booking, telHref, url, img } from "../data/site";
 ---
 
 <Layout title={`Booking | ${site.name}`} description="Send a booking request to Yugharling Resort & Wellness Spa in Bumthang, Bhutan. Choose your dates, room and guests and send it to our reservations team on WhatsApp.">
-  <Preloader />
   <Header />
   <Overlays />
 

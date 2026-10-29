@@ -1,7 +1,6 @@
 ---
 // Served by Cloudflare for unknown URLs ("not_found_handling": "404-page" in wrangler.jsonc)
 import Layout from "../layouts/Layout.astro";
-import Preloader from "../components/Preloader.astro";
 import Header from "../components/Header.astro";
 import Overlays from "../components/Overlays.astro";
 import Footer from "../components/Footer.astro";
@@ -11,7 +10,6 @@ import { site, url, img } from "../data/site";
 ---
 
 <Layout title={`Page Not Found | ${site.name}`} description="The page you were looking for could not be found.">
-  <Preloader />
   <Header />
   <Overlays />
 

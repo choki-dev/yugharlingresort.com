@@ -1,7 +1,6 @@
 ---
 // One page per room type — content from yugharlingresort.com/accommodation/<room>/
 import Layout from "../../layouts/Layout.astro";
-import Preloader from "../../components/Preloader.astro";
 import Header from "../../components/Header.astro";
 import Overlays from "../../components/Overlays.astro";
 import Footer from "../../components/Footer.astro";
@@ -22,7 +21,6 @@ const icons: Record<string, string> = { Bed: "bed-s", Inventory: "door", Locatio
 ---
 
 <Layout title={`${r.title} | ${site.name}`} description={`${r.text} Rates from ${r.price} per night.`} image={r.image}>
-  <Preloader />
   <Header />
   <Overlays />
 

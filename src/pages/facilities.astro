@@ -1,7 +1,6 @@
 ---
 // Facilities — 4. Dining, Bar & Lounge · 5. Spa & Wellness · 6. Meetings & Events · 9. Facilities & Amenities
 import Layout from "../layouts/Layout.astro";
-import Preloader from "../components/Preloader.astro";
 import Header from "../components/Header.astro";
 import Overlays from "../components/Overlays.astro";
 import Footer from "../components/Footer.astro";
@@ -15,7 +14,6 @@ const all = facilityGroups.flatMap((g) => g.items);
 ---
 
 <Layout title={`Facilities | ${site.name}`} description="Dining, bar and lounge, spa and wellness with sauna and hot-stone bath, conference and meeting rooms, and a prayer room at Yugharling Resort, Bumthang.">
-  <Preloader />
   <Header />
   <Overlays />
 

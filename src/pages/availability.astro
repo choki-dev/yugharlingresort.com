@@ -4,7 +4,6 @@
 // room with its status, stay total, Book Now (booking form, pre-filled) and a Reserve Now that
 // sends the stay to the reservations WhatsApp. There is no live inventory, so the team confirms.
 import Layout from "../layouts/Layout.astro";
-import Preloader from "../components/Preloader.astro";
 import Header from "../components/Header.astro";
 import Overlays from "../components/Overlays.astro";
 import Footer from "../components/Footer.astro";
@@ -16,7 +15,6 @@ import { rooms, site, booking, img, url, telHref } from "../data/site";
 ---
 
 <Layout title={`Check Availability | ${site.name}`} description="Choose your dates and guests to compare rooms and stay prices at Yugharling Resort & Wellness Spa in Bumthang, then reserve with our team on WhatsApp.">
-  <Preloader />
   <Header />
   <Overlays />
 

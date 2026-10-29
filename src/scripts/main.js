@@ -6,15 +6,6 @@
   const $ = (sel, ctx = document) => ctx.querySelector(sel);
   const $$ = (sel, ctx = document) => Array.from(ctx.querySelectorAll(sel));
 
-  /* ---------- Preloader ---------- */
-  function hidePreloader() {
-    $("#preloader").classList.add("is-hidden");
-    document.body.classList.remove("is-locked");
-    if (slides.length) startHero();
-  }
-  // Lift it as soon as the page is ready rather than waiting for every image: photos keep loading underneath
-  setTimeout(hidePreloader, 150);
-
   /* ---------- Hero slider ---------- */
   const slides = $$(".hero__slide");
   const dots = $$(".hero__dot");
@@ -22,16 +13,15 @@
   const DURATION = 6500;
   let current = 0;
   let timer = null;
-  let heroStarted = false;
+  let nextBgTimer = null;
 
-  // Only the first slide's photo loads with the page; the others are set from data-bg once it has loaded
+  // Only the first slide's photo loads with the page; each next one is fetched shortly before it shows
   function loadSlideBg(slide) {
     const bg = $(".hero__bg[data-bg]", slide);
     if (!bg) return;
     bg.style.backgroundImage = `url('${bg.dataset.bg}')`;
     bg.removeAttribute("data-bg");
   }
-  if (slides.length) window.addEventListener("load", () => slides.forEach(loadSlideBg));
 
   function goTo(index) {
     slides[current].classList.remove("is-active");
@@ -51,16 +41,13 @@
     void progress.offsetWidth; // reflow to restart the CSS transition
     progress.classList.add("is-running");
     timer = setTimeout(() => goTo(current + 1), DURATION);
-  }
-
-  function startHero() {
-    if (heroStarted) return;
-    heroStarted = true;
-    restartTimer();
+    clearTimeout(nextBgTimer);
+    nextBgTimer = setTimeout(() => loadSlideBg(slides[(current + 1) % slides.length]), DURATION - 2500);
   }
 
   const hero = $(".hero");
   if (hero) {
+    restartTimer();
     dots.forEach((dot, i) => dot.addEventListener("click", () => goTo(i)));
     $(".js-hero-prev").addEventListener("click", () => goTo(current - 1));
     $(".js-hero-next").addEventListener("click", () => goTo(current + 1));
