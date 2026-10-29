@@ -276,9 +276,8 @@ h5 { font-size: 18px; line-height: 1.39em; letter-spacing: .075em; }
   position: fixed; top: 0; right: 0; bottom: 0;
   width: 420px; max-width: 100%;
   z-index: 400;
-  /* small copy: it sits under a 90% shade, and loads on every page even while the menu is closed */
   background: linear-gradient(rgba(27,35,64,.9), rgba(27,35,64,.94)),
-    url("/images/yugharling/480/resort-view.webp") center/cover;
+    url("/images/yugharling/resort-view.jpg") center/cover;
   color: #d8dce0;
   padding: 90px 50px 50px;
   transform: translateX(100%);

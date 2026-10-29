@@ -1,13 +1,13 @@
 ---
 import SectionTitle from "./SectionTitle.astro";
-import { about, srcset } from "../data/site";
+import { about } from "../data/site";
 ---
 
 <section class="section" id="about">
   <div class="container about__grid">
     <div class="about__media reveal">
-      <img class="img-main" src={about.imgMain} srcset={srcset(about.imgMain)} sizes="(max-width: 1100px) 100vw, 480px" alt={about.imgMainAlt} loading="lazy" />
-      <img class="img-small" src={about.imgSmall} srcset={srcset(about.imgSmall)} sizes="(max-width: 1100px) 52vw, 250px" alt={about.imgSmallAlt} loading="lazy" />
+      <img class="img-main" src={about.imgMain} alt={about.imgMainAlt} loading="lazy" />
+      <img class="img-small" src={about.imgSmall} alt={about.imgSmallAlt} loading="lazy" />
       <div class="about__stamp"><div><strong data-count={about.stamp.count}>0</strong><span set:html={about.stamp.text} /></div></div>
     </div>
 

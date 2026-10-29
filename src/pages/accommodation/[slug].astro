@@ -8,7 +8,7 @@ import PageHero from "../../components/PageHero.astro";
 import BookingBar from "../../components/BookingBar.astro";
 import SectionTitle from "../../components/SectionTitle.astro";
 import Icon from "../../components/Icon.astro";
-import { rooms, site, whatsappLink, accommodation, url, srcset } from "../../data/site";
+import { rooms, site, whatsappLink, accommodation, url } from "../../data/site";
 
 export function getStaticPaths() {
   return rooms.map((room) => ({ params: { slug: room.slug }, props: { room } }));
@@ -96,7 +96,7 @@ const icons: Record<string, string> = { Bed: "bed-s", Inventory: "door", Locatio
           {others.map((o, i) => (
             <article class:list={["tour-card reveal", ["", "reveal-d1", "reveal-d2", "reveal-d3"][i]]}>
               <a href={o.href} class="tour-card__img">
-                <img src={o.image} srcset={srcset(o.image)} sizes="(max-width: 680px) 380px, (max-width: 1100px) 50vw, 300px" alt={o.title} loading="lazy" />
+                <img src={o.image} alt={o.title} loading="lazy" />
                 {o.tag && <span class="tour-card__tag">{o.tag}</span>}
                 <div class="tour-card__price"><strong>{o.price}</strong><span>/ night</span></div>
               </a>

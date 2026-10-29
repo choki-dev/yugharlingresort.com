@@ -1,7 +1,7 @@
 ---
 import Icon from "./Icon.astro";
 import SectionTitle from "./SectionTitle.astro";
-import { rooms, url, srcset } from "../data/site";
+import { rooms, url } from "../data/site";
 
 const delays = ["", "reveal-d1", "reveal-d2"];
 const metaIcons = ["bed-s", "users", "view"];
@@ -19,7 +19,7 @@ const metaIcons = ["bed-s", "users", "view"];
       {rooms.map((r, i) => (
         <article class:list={["tour-card reveal", delays[i % 3]]}>
           <div class="tour-card__img">
-            <img src={r.image} srcset={srcset(r.image)} sizes="(max-width: 680px) min(520px, 100vw), (max-width: 860px) 50vw, 400px" alt={r.title} loading="lazy" />
+            <img src={r.image} alt={r.title} loading="lazy" />
             {r.tag && <span class="tour-card__tag">{r.tag}</span>}
             <div class="tour-card__price"><strong>{r.price}</strong><span>/ night</span></div>
           </div>

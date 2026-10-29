@@ -22,8 +22,7 @@ interface Props {
 }
 const { title = `${site.name} | Bumthang, Bhutan`, description = site.description, image = img("resort-view.jpg") } = Astro.props;
 const canonical = new URL(Astro.url.pathname, Astro.site);
-// Social sites get the original JPEG; pages show the lighter .webp copy
-const ogImage = new URL(image.replace(/\.webp$/, ".jpg"), Astro.site);
+const ogImage = new URL(image, Astro.site);
 
 // Hotel details for search engines, on the home page only
 const isHome = Astro.url.pathname === url("/") || Astro.url.pathname === `${url("/")}/`;

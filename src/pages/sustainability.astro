@@ -6,7 +6,7 @@ import Overlays from "../components/Overlays.astro";
 import Footer from "../components/Footer.astro";
 import PageHero from "../components/PageHero.astro";
 import SectionTitle from "../components/SectionTitle.astro";
-import { site, img, sustainability, srcset } from "../data/site";
+import { site, img, sustainability } from "../data/site";
 
 const delays = ["", "reveal-d1", "reveal-d2"];
 ---
@@ -32,7 +32,7 @@ const delays = ["", "reveal-d1", "reveal-d2"];
         <div class="cards-3">
           {sustainability.items.map((s, i) => (
             <article class:list={["blog-card reveal", delays[i % 3]]}>
-              <div class="blog-card__img"><img src={s.image} srcset={srcset(s.image)} sizes="(max-width: 680px) min(520px, 100vw), (max-width: 860px) 50vw, 400px" alt={s.title} loading="lazy" /></div>
+              <div class="blog-card__img"><img src={s.image} alt={s.title} loading="lazy" /></div>
               <h4>{s.title}</h4>
               <p>{s.text}</p>
             </article>
