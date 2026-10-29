@@ -57,10 +57,8 @@ export const navRight = [
 
 // Paste each profile URL into href; until then the icon shows but is not a link.
 export const socials = [
-  { icon: "fb", label: "Facebook", href: "" },
-  { icon: "ig", label: "Instagram", href: "" },
-  { icon: "x", label: "X", href: "" },
-  { icon: "yt", label: "YouTube", href: "" },
+  { icon: "fb", label: "Facebook", href: "https://www.facebook.com/share/1GYyoGg2mA/" },
+  { icon: "ig", label: "Instagram", href: "https://www.instagram.com/yugharlingresort/" },
 ];
 
 /* ---------- 1. Home page ---------- */
@@ -156,7 +154,7 @@ export const aboutPage = [
   },
   {
     title: "Our Approach to Hospitality",
-    image: img("reception.jpg"), imageSmall: img("dining.jpg"),
+    image: img("lobby-chairs.jpg"), imageSmall: img("dining.jpg"),
     text: [
       "We believe a memorable stay is created through warmth, calm and authenticity. From restful rooms and fresh indoor air to local flavours, wellness experiences and attentive service, each element is intended to help guests feel comfortable, connected and at ease.",
     ],
@@ -248,6 +246,9 @@ export const booking = {
   notice: "Private balconies are available only in rooms located in the cottage buildings · Complimentary Wi-Fi · 24-hour hot water powered by heat-pump systems",
   maxAdults: 10,
   maxChildren: 6,
+  // Online requests; larger groups and longer stays are asked to contact the resort
+  maxRooms: 5,
+  maxNights: 30,
 };
 
 /* ---------- 7. Sustainability ---------- */

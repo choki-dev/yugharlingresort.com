@@ -10,7 +10,7 @@ import Footer from "../components/Footer.astro";
 import PageHero from "../components/PageHero.astro";
 import SectionTitle from "../components/SectionTitle.astro";
 import Icon from "../components/Icon.astro";
-import { rooms, site, telHref, url } from "../data/site";
+import { rooms, site, booking, telHref, url } from "../data/site";
 ---
 
 <Layout title={`Booking | ${site.name}`} description="Send a booking request to Yugharling Resort & Wellness Spa in Bumthang, Bhutan. Choose your dates, room and guests and send it to our reservations team on WhatsApp.">
@@ -29,7 +29,7 @@ import { rooms, site, telHref, url } from "../data/site";
 
     <section class="section section--mist" id="booking-form">
       <div class="container booking-page">
-        <form class="booking-request reveal" id="bookingRequest" novalidate data-whatsapp={site.reservationWhatsapp}>
+        <form class="booking-request reveal" id="bookingRequest" novalidate data-whatsapp={site.reservationWhatsapp} data-email={site.email}>
           <SectionTitle label="Booking" thin="Reservation request" title="Book Your Stay" />
 
           <fieldset>
@@ -88,6 +88,12 @@ import { rooms, site, telHref, url } from "../data/site";
                   {Array.from({ length: 7 }, (_, i) => <option>{i}</option>)}
                 </select>
               </label>
+              <label class="form-field">
+                <span>No. of rooms</span>
+                <select name="rooms">
+                  {Array.from({ length: booking.maxRooms }, (_, i) => <option>{i + 1}</option>)}
+                </select>
+              </label>
               <label class="form-field form-field--wide">
                 <span>Special requests</span>
                 <textarea name="notes" rows="4" placeholder="Arrival time, extra bed, excursions, dietary needs…"></textarea>
@@ -97,8 +103,11 @@ import { rooms, site, telHref, url } from "../data/site";
 
           <p class="form-error" id="bookingError" role="alert"></p>
           <div class="booking-request__submit">
-            <button type="submit" class="btn btn--teal"><Icon name="whatsapp" class="btn__icon" />Send via WhatsApp</button>
-            <p>Your request opens in WhatsApp, ready to send to our reservations team. Nothing is stored on this website.</p>
+            <div class="booking-request__buttons">
+              <button type="submit" name="via" value="whatsapp" class="btn btn--teal"><Icon name="whatsapp" class="btn__icon" />Send via WhatsApp</button>
+              <button type="submit" name="via" value="email" class="btn btn--outlined"><Icon name="mail" class="btn__icon" />Send via Email</button>
+            </div>
+            <p>Your request opens in WhatsApp or your email app, ready to send to our reservations team. Nothing is stored on this website.</p>
           </div>
         </form>
 

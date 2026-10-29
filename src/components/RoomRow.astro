@@ -1,17 +1,21 @@
 ---
-// Zig-zag room card (same look as the facility cards) with View Room + Reserve Now
+// Zig-zag room card (same look as the facility cards) with View Room + Reserve Now.
+// On the availability page (book) it also gets Book Now, and the data-* attributes let
+// scripts/availability.js show the stay status and total and rewrite both buttons.
 import Icon from "./Icon.astro";
-import { site, whatsappLink, type rooms } from "../data/site";
+import { site, whatsappLink, url, type rooms } from "../data/site";
 
 interface Props {
   room: (typeof rooms)[number];
   index: number;
+  /** Availability page: adds Book Now and the stay status line */
+  book?: boolean;
 }
-const { room: r, index } = Astro.props;
+const { room: r, index, book = false } = Astro.props;
 const reserve = whatsappLink(["I would like to make a reservation:", `• Room type: ${r.title}`, `• Rate: from ${r.price} per night`, "", "Please let me know the availability."], site.reservationWhatsapp);
 ---
 
-<article class="avail-card reveal">
+<article class="avail-card reveal" data-slug={r.slug} data-room={r.title} data-rate={r.rate} data-occupancy={r.occupancy}>
   <a href={r.href} class="avail-card__media" aria-label={`View ${r.title}`}>
     <img src={r.image} alt={r.title} loading="lazy" />
     {r.tag && <span class="tour-card__tag">{r.tag}</span>}
@@ -24,6 +28,7 @@ const reserve = whatsappLink(["I would like to make a reservation:", `• Room t
     <h3><a href={r.href}>{r.title}</a></h3>
     <svg class="ornament"><use href="#i-wave" /></svg>
     <p>{r.text}</p>
+    {book && <p class="avail-card__status js-stay-status"></p>}
     <div class="tour-card__meta">
       <span><Icon name="door" />{r.count} {r.count === 1 ? "room" : "rooms"}</span>
       <span><Icon name="bed-s" />{r.beds}</span>
@@ -35,9 +40,11 @@ const reserve = whatsappLink(["I would like to make a reservation:", `• Room t
       <div class="avail-card__rate">
         <span class="label">Rates from</span>
         <div><strong>{r.price}</strong><span>/ night</span></div>
+        <p class="avail-card__note js-stay-note" hidden></p>
       </div>
       <div class="avail-card__actions">
-        <a class="btn btn--teal" href={reserve} target="_blank" rel="noopener">Reserve Now</a>
+        {book && <a class="btn btn--teal js-book" href={`${url("/booking/")}?room=${r.slug}#booking-form`}>Book Now</a>}
+        <a class:list={["btn js-reserve", book ? "btn--outlined" : "btn--teal"]} href={reserve} target="_blank" rel="noopener">Reserve Now</a>
         <a href={r.href} class="link-more">View Room</a>
       </div>
     </div>

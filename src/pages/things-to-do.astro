@@ -36,9 +36,11 @@ const delays = ["", "reveal-d1", "reveal-d2"];
         </SectionTitle>
         <div class="cards-3">
           {experience.categories.map((c, i) => (
-            <article class:list={["blog-card reveal", delays[i % 3]]}>
-              <div class="blog-card__img"><img src={c.image} alt={c.alt} loading="lazy" /></div>
-              <h4>{c.text}</h4>
+            <article class:list={["exp-card reveal", delays[i % 3]]}>
+              <div class="exp-card__img"><img src={c.image} alt={c.alt} loading="lazy" /></div>
+              <div class="exp-card__text">
+                <h4>{c.text}</h4>
+              </div>
             </article>
           ))}
         </div>

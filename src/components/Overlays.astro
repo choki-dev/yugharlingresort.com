@@ -3,7 +3,7 @@
 import Icon from "./Icon.astro";
 import Logo from "./Logo.astro";
 import Socials from "./Socials.astro";
-import { site, navLeft, navRight, whatsappLink } from "../data/site";
+import { site, navLeft, navRight, whatsappLink, telHref } from "../data/site";
 import { contact } from "../data/pages";
 
 const allLinks = [...navLeft, ...navRight];
@@ -21,6 +21,7 @@ const allLinks = [...navLeft, ...navRight];
     <li><Icon name="phone" /><a href={site.phoneHref}>Front desk: {site.phone}</a></li>
     <li><Icon name="whatsapp" /><a href={whatsappLink(["I have a question about Yugharling Resort."])} target="_blank" rel="noopener">Front desk: {site.mobile}</a></li>
     <li><Icon name="whatsapp" /><a href={whatsappLink(["I would like to make a reservation."], site.reservationWhatsapp)} target="_blank" rel="noopener">Reservations: {site.reservationMobile}</a></li>
+    <li><Icon name="phone" /><a href={telHref(site.reservationPhone)}>Reservations: {site.reservationPhone}</a></li>
     <li><Icon name="mail" /><a href={`mailto:${site.email}`}>{site.email}</a></li>
   </ul>
   <h5>Location</h5>

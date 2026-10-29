@@ -1,4 +1,4 @@
-/* Booking page: validate the request and send it as a WhatsApp message */
+/* Booking page: validate the request and send it as a WhatsApp message or an email */
 import flatpickr from "flatpickr";
 
 const form = document.getElementById("bookingRequest");
@@ -26,7 +26,7 @@ if (form) {
     if (opt) opt.selected = true;
   }
 
-  // ?checkin=&checkout=&adults=&children= (from the Check Availability bar) pre-fill the stay
+  // ?checkin=&checkout=&adults=&children=&rooms= (Book Now on the availability page) pre-fill the stay
   const fromISO = (s) => {
     const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(s || "");
     return m ? new Date(+m[1], +m[2] - 1, +m[3]) : null;
@@ -44,6 +44,7 @@ if (form) {
   };
   preselect("adults", params.get("adults"));
   preselect("kids", params.get("children"));
+  preselect("rooms", params.get("rooms"));
 
   const field = (name) => form.elements[name];
   const value = (name) => (field(name).value || "").trim();
@@ -89,11 +90,19 @@ if (form) {
       `• Bed type: ${value("bed") || "No preference"}`,
       `• Adults: ${value("adults")}`,
       `• Kids: ${value("kids")}`,
+      `• Rooms: ${value("rooms")}`,
       value("notes") ? "" : null,
       value("notes") ? `Special requests: ${value("notes")}` : null,
       "",
       "Please let me know if this is available. Thank you!",
     ].filter((l) => l !== null);
+
+    // Send via Email opens the guest's mail app addressed to reservations
+    if (e.submitter?.value === "email") {
+      const subject = `Booking request: ${value("name")}, ${pretty(checkin)} – ${pretty(checkout)}`;
+      window.location.href = `mailto:${form.dataset.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(lines.join("\n"))}`;
+      return;
+    }
 
     const number = (form.dataset.whatsapp || "").replace(/\D/g, "");
     const url = `https://wa.me/${number}?text=${encodeURIComponent(lines.join("\n"))}`;

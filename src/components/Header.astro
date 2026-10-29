@@ -2,7 +2,7 @@
 import Icon from "./Icon.astro";
 import Logo from "./Logo.astro";
 import HeaderIcons from "./HeaderIcons.astro";
-import { site, navLeft, navRight, url } from "../data/site";
+import { site, navLeft, navRight, url, telHref } from "../data/site";
 
 // Highlight the page we're on ("/accommodation/standard-room/" lights up Accommodation)
 const path = Astro.url.pathname.endsWith("/") ? Astro.url.pathname : `${Astro.url.pathname}/`;
@@ -15,6 +15,7 @@ const isActive = (href: string) => (href === url("/") ? path === url("/") : path
       <span>{site.tagline}</span>
       <div class="top-bar__right">
         <a href={site.phoneHref}><Icon name="phone" />{site.phone}</a>
+        <a href={telHref(site.mobile)}><Icon name="phone" />{site.mobile}</a>
         <a href={`mailto:${site.email}`}><Icon name="mail" />{site.email}</a>
       </div>
     </div>

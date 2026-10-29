@@ -1,0 +1,52 @@
+---
+// Check Availability results, modelled on the33rdes.com/availability/:
+// the bar pre-filled from ?dates=22/10/2026 to 24/10/2026&adults=&children=&rooms=, then every
+// room with its status, stay total, Book Now (booking form, pre-filled) and a Reserve Now that
+// sends the stay to the reservations WhatsApp. There is no live inventory, so the team confirms.
+import Layout from "../layouts/Layout.astro";
+import Preloader from "../components/Preloader.astro";
+import Header from "../components/Header.astro";
+import Overlays from "../components/Overlays.astro";
+import Footer from "../components/Footer.astro";
+import PageHero from "../components/PageHero.astro";
+import BookingBar from "../components/BookingBar.astro";
+import SectionTitle from "../components/SectionTitle.astro";
+import RoomRow from "../components/RoomRow.astro";
+import { rooms, site, booking, img, url, telHref } from "../data/site";
+---
+
+<Layout title={`Check Availability | ${site.name}`} description="Choose your dates and guests to compare rooms and stay prices at Yugharling Resort & Wellness Spa in Bumthang, then reserve with our team on WhatsApp.">
+  <Preloader />
+  <Header />
+  <Overlays />
+
+  <main>
+    <PageHero
+      image={img("deluxe-twin.jpg")}
+      script="check"
+      title="Availability"
+      crumbs={[{ label: "Rooms & Suites", href: url("/accommodation/") }, { label: "Availability" }]}
+      cta={{ href: "#available-rooms", label: "View Rooms" }}
+    />
+
+    <BookingBar variant="hero" />
+
+    <section class="section section--mist" id="available-rooms">
+      <div class="container">
+        <SectionTitle label="Your stay" thin="Rooms for your stay" title="Available Rooms" center class="reveal">
+          <p class="avail-summary" id="staySummary">—</p>
+          <p>Compare our rooms and suites, then book online or reserve now on WhatsApp. Change your dates, guests or rooms above to search again.</p>
+        </SectionTitle>
+        <p class="avail-notice" role="alert" id="stayNotice" hidden></p>
+        <div class="avail-list" id="availabilityList" data-whatsapp={site.reservationWhatsapp} data-max-rooms={booking.maxRooms} data-max-nights={booking.maxNights}>
+          {rooms.map((r, i) => <RoomRow room={r} index={i} book />)}
+        </div>
+        <p class="avail-note">No payment is taken online. Our reservations team will confirm availability for your dates. Questions? Call <a href={telHref(site.reservationPhone)}>{site.reservationPhone}</a> or email <a href={`mailto:${site.email}`}>{site.email}</a>.</p>
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+</Layout>
+
+<script src="../scripts/availability.js"></script>

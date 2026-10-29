@@ -12,9 +12,9 @@
     document.body.classList.remove("is-locked");
     if (slides.length) startHero();
   }
-  window.addEventListener("load", () => setTimeout(hidePreloader, 400));
-  // Safety net in case a slow image delays the load event
-  setTimeout(() => { if (!$("#preloader").classList.contains("is-hidden")) hidePreloader(); }, 4000);
+  window.addEventListener("load", () => setTimeout(hidePreloader, 200));
+  // Don't hold the page behind the preloader on slow connections: images keep loading underneath
+  setTimeout(() => { if (!$("#preloader").classList.contains("is-hidden")) hidePreloader(); }, 1500);
 
   /* ---------- Hero slider ---------- */
   const slides = $$(".hero__slide");
@@ -25,11 +25,21 @@
   let timer = null;
   let heroStarted = false;
 
+  // Only the first slide's photo loads with the page; the others are set from data-bg once it has loaded
+  function loadSlideBg(slide) {
+    const bg = $(".hero__bg[data-bg]", slide);
+    if (!bg) return;
+    bg.style.backgroundImage = `url('${bg.dataset.bg}')`;
+    bg.removeAttribute("data-bg");
+  }
+  if (slides.length) window.addEventListener("load", () => slides.forEach(loadSlideBg));
+
   function goTo(index) {
     slides[current].classList.remove("is-active");
     dots[current].classList.remove("is-active");
     dots[current].removeAttribute("aria-current");
     current = (index + slides.length) % slides.length;
+    loadSlideBg(slides[current]);
     slides[current].classList.add("is-active");
     dots[current].classList.add("is-active");
     dots[current].setAttribute("aria-current", "true");

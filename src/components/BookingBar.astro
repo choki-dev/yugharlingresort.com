@@ -1,8 +1,9 @@
 ---
 // "Check Availability" bar, modelled on tshangrihotel.com:
 // date range · guests dropdown · scrolling notice · submit.
-// Submitting opens the booking form with the chosen dates and guests filled in
-// (see scripts/booking.js and scripts/booking-form.js).
+// As on the33rdes.com, submitting asks for dates first, then opens the availability page
+// (room list with stay totals, Book Now and WhatsApp Reserve Now) for the chosen dates,
+// guests and rooms (see scripts/booking.js and scripts/availability.js).
 import "flatpickr/dist/flatpickr.min.css";
 import Icon from "./Icon.astro";
 import { booking, url } from "../data/site";
@@ -19,11 +20,12 @@ const dropdownId = `guests-${Math.random().toString(36).slice(2, 8)}`;
 <div class:list={["booking-bar-wrap", `booking-bar-wrap--${variant}`]}>
   <form
     class="booking-bar js-booking-bar"
-    action={url("/booking/")}
+    action={url("/availability/")}
     method="get"
     novalidate
     data-max-adults={booking.maxAdults}
     data-max-children={booking.maxChildren}
+    data-max-rooms={booking.maxRooms}
   >
     <label class="bb-group bb-group--dates">
       <Icon name="calendar" class="bb-icon" />
@@ -39,11 +41,11 @@ const dropdownId = `guests-${Math.random().toString(36).slice(2, 8)}`;
       <button type="button" class="bb-toggle" aria-expanded="false" aria-controls={dropdownId}>
         <Icon name="user" class="bb-icon" />
         <span class="bb-field">
-          <span class="bb-label">Guests</span>
-          <span class="bb-guests-total">2 Adults, 0 Children</span>
+          <span class="bb-label">Guests &amp; Rooms</span>
+          <span class="bb-guests-total">2 Adults, 0 Children · 1 Room</span>
         </span>
       </button>
-      <div class="guests-dropdown" id={dropdownId} role="group" aria-label="Choose guests">
+      <div class="guests-dropdown" id={dropdownId} role="group" aria-label="Choose guests and rooms">
         <div class="guest-row">
           <div class="guest-label"><strong>Adult</strong><span>Ages 13 or above</span></div>
           <div class="guest-controls">
@@ -60,10 +62,19 @@ const dropdownId = `guests-${Math.random().toString(36).slice(2, 8)}`;
             <button type="button" class="btn-ctrl" data-target="children" data-dir="1" aria-label="Add child">+</button>
           </div>
         </div>
+        <div class="guest-row">
+          <div class="guest-label"><strong>Rooms</strong><span>Up to {booking.maxRooms} online</span></div>
+          <div class="guest-controls">
+            <button type="button" class="btn-ctrl" data-target="rooms" data-dir="-1" aria-label="Remove room">−</button>
+            <span class="count-val" data-count-for="rooms">1</span>
+            <button type="button" class="btn-ctrl" data-target="rooms" data-dir="1" aria-label="Add room">+</button>
+          </div>
+        </div>
         <button type="button" class="btn-ok">Ok</button>
       </div>
       <input type="hidden" name="adults" value="2" class="bb-adults" />
       <input type="hidden" name="children" value="0" class="bb-children" />
+      <input type="hidden" name="rooms" value="1" class="bb-rooms" />
     </div>
 
     <div class="bb-group bb-group--notice" aria-hidden="true">
