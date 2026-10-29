@@ -2,9 +2,19 @@
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "yugharling-resort",
   "compatibility_date": "2026-10-01",
+  // Handles /api/booking (booking emails via Resend); everything else is the static site
+  "main": "worker/index.js",
   // Serve the static Astro build from ./dist
   "assets": {
     "directory": "./dist",
-    "not_found_handling": "404-page"
+    "binding": "ASSETS",
+    "not_found_handling": "404-page",
+    "run_worker_first": ["/api/*"]
+  },
+  // RESEND_API_KEY is a secret: npx wrangler secret put RESEND_API_KEY (locally: .dev.vars)
+  "vars": {
+    "BOOKING_TO": "reservations.yugharling@gmail.com",
+    "BOOKING_FROM": "Yugharling Website <bookings@yugharlingresort.com>",
+    "ALLOWED_ORIGINS": "https://yugharlingresort.com,https://www.yugharlingresort.com,https://choki-dev.github.io,http://localhost:4321"
   }
 }

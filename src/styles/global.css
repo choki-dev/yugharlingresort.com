@@ -1277,6 +1277,9 @@ a.feature:hover h4 { color: var(--teal); }
 .form-field.is-invalid select { border-color: #b3453a; }
 .form-field.is-invalid > span { color: #b3453a; }
 .form-error { min-height: 1.5em; margin: 0 0 10px; color: #b3453a; }
+.form-error.is-success { color: #3f6a3a; }
+/* spam trap field, kept off-screen rather than display:none so bots still fill it */
+.form-trap { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
 .booking-request__submit { display: flex; align-items: center; gap: 24px; flex-wrap: wrap; }
 .booking-request__buttons { display: flex; flex-wrap: wrap; gap: 14px; }
 .booking-request__buttons .btn { padding-left: 34px; padding-right: 30px; }

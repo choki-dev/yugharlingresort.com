@@ -29,7 +29,8 @@ import { rooms, site, booking, telHref, url } from "../data/site";
 
     <section class="section section--mist" id="booking-form">
       <div class="container booking-page">
-        <form class="booking-request reveal" id="bookingRequest" novalidate data-whatsapp={site.reservationWhatsapp} data-email={site.email}>
+        <!-- data-api: the Worker's /api/booking (PUBLIC_BOOKING_API points the GitHub Pages preview at the Worker) -->
+        <form class="booking-request reveal" id="bookingRequest" novalidate data-whatsapp={site.reservationWhatsapp} data-email={site.email} data-api={import.meta.env.PUBLIC_BOOKING_API || url("/api/booking")}>
           <SectionTitle label="Booking" thin="Reservation request" title="Book Your Stay" />
 
           <fieldset>
@@ -101,13 +102,16 @@ import { rooms, site, booking, telHref, url } from "../data/site";
             </div>
           </fieldset>
 
+          <!-- Spam trap: hidden from people, bots fill it in -->
+          <label class="form-trap" aria-hidden="true">Website <input name="website" type="text" tabindex="-1" autocomplete="off" /></label>
+
           <p class="form-error" id="bookingError" role="alert"></p>
           <div class="booking-request__submit">
             <div class="booking-request__buttons">
               <button type="submit" name="via" value="whatsapp" class="btn btn--teal"><Icon name="whatsapp" class="btn__icon" />Send via WhatsApp</button>
               <button type="submit" name="via" value="email" class="btn btn--outlined"><Icon name="mail" class="btn__icon" />Send via Email</button>
             </div>
-            <p>Your request opens in WhatsApp or your email app, ready to send to our reservations team. Nothing is stored on this website.</p>
+            <p>Send via Email delivers your request straight to our reservations team; Send via WhatsApp opens it in WhatsApp, ready to send. Nothing is stored on this website.</p>
           </div>
         </form>
 

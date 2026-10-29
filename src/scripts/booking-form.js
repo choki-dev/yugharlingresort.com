@@ -1,4 +1,4 @@
-/* Booking page: validate the request and send it as a WhatsApp message or an email */
+/* Booking page: validate the request and send it as a WhatsApp message or an email (via the Worker and Resend) */
 import flatpickr from "flatpickr";
 
 const form = document.getElementById("bookingRequest");
@@ -57,12 +57,41 @@ if (form) {
     else el.focus();
   }
 
+  const openMailApp = (subject, text) => {
+    window.location.href = `mailto:${form.dataset.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(text)}`;
+  };
+
+  async function sendEmail(subject, text, button) {
+    const label = button.innerHTML;
+    button.disabled = true;
+    button.textContent = "Sending…";
+    try {
+      const res = await fetch(form.dataset.api, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name: value("name"), phone: value("phone"), email: value("email"), website: value("website"), subject, text }),
+      });
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      error.classList.add("is-success");
+      error.textContent = "Thank you! Your request has been sent. Our reservations team will contact you shortly.";
+      form.reset();
+      picker.clear();
+    } catch {
+      // No Worker here (e.g. the GitHub Pages preview) or sending failed: fall back to the mail app
+      openMailApp(subject, text);
+    } finally {
+      button.disabled = false;
+      button.innerHTML = label;
+    }
+  }
+
   form.addEventListener("input", (e) => e.target.closest(".form-field")?.classList.remove("is-invalid"));
   picker.config.onChange.push(() => datesInput.closest(".form-field").classList.remove("is-invalid"));
 
   form.addEventListener("submit", (e) => {
     e.preventDefault();
     error.textContent = "";
+    error.classList.remove("is-success");
     form.querySelectorAll(".is-invalid").forEach((el) => el.classList.remove("is-invalid"));
 
     if (!value("name")) return fail("Please enter your full name.", "name");
@@ -97,10 +126,10 @@ if (form) {
       "Please let me know if this is available. Thank you!",
     ].filter((l) => l !== null);
 
-    // Send via Email opens the guest's mail app addressed to reservations
+    // Send via Email posts to the Worker (Resend); if that can't be reached, it opens the guest's mail app instead
     if (e.submitter?.value === "email") {
       const subject = `Booking request: ${value("name")}, ${pretty(checkin)} – ${pretty(checkout)}`;
-      window.location.href = `mailto:${form.dataset.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(lines.join("\n"))}`;
+      sendEmail(subject, lines.join("\n"), e.submitter);
       return;
     }
 
